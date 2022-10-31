@@ -20,7 +20,7 @@
   
   
 
-<meta name="author" content="yamaguchi" />
+<meta name="author" content="Tsubasa Yamaguchi" />
 
 
 <meta name="date" content="2022-10-31" />
@@ -204,7 +204,6 @@ div.csl-indent {
 <p>なお、以上で算出した指標は<code>EloRating</code>パッケージ<span class="citation">(<a href="#ref-Neumann2011a" role="doc-biblioref">Neumann 2011</a>)</span>でも求めることができる。個人的にはデータフレームとして出力してくれるので、こちらの方が使いやすい。<br />
 <a href="https://rdrr.io/cran/EloRating/">詳細はこちら</a></p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="elorating-packageを用いた方法.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EloRating)</span></code></pre></div>
-<p><br /></p>
 <div id="davids-scoreとsteepness" class="section level2 hasAnchor">
 <h2>4.1 David’s Scoreとsteepness<a href="elorating-packageを用いた方法.html#davids-scoreとsteepness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>算出する際、行列の名前が入っていなければいけないよう。</p>
@@ -246,7 +245,6 @@ div.csl-indent {
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="elorating-packageを用いた方法.html#cb24-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">transitivity</span>(mat, <span class="at">runs =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>##       Pt     ttri        p     runs 
 ##    0.988    0.952    0.000 1000.000</code></pre>
-<p><br /></p>
 </div>
 <div id="おまけelo-ratingの計算" class="section level2 hasAnchor">
 <h2>4.3 おまけ(Elo-ratingの計算)<a href="elorating-packageを用いた方法.html#おまけelo-ratingの計算" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -303,7 +301,6 @@ div.csl-indent {
 <p>Elo-ratingの時系列的変化は以下のように描画できる。</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="elorating-packageを用いた方法.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eloplot</span>(res)</span></code></pre></div>
 <p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
-<p><br /></p>
 </div>
 <div id="おまけその他" class="section level2 hasAnchor">
 <h2>4.4 おまけ(その他)<a href="elorating-packageを用いた方法.html#おまけその他" class="anchor-section" aria-label="Anchor link to header"></a></h2>

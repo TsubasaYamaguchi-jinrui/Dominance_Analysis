@@ -1,6 +1,6 @@
 ---
 title: "Dominance Analysis Using R"
-author: "yamaguchi"
+author: "Tsubasa Yamaguchi"
 date: "`r Sys.Date()`"
 output: 
   bookdown::gitbook:

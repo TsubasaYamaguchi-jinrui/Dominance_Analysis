@@ -44,8 +44,6 @@ r <- lm(data=nDS_d2, NormDS~x)
 r$coefficients[[2]]
 ```
 
-<br/>  
-
 ## 2.2 steepnessパッケージを用いた算出  
 `steepness`パッケージでは、わざわざ単回帰を行わなくてもsteepnessを算出することができる。    
 ```{r}

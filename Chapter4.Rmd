@@ -4,7 +4,6 @@
 ```{r}
 library(EloRating)
 ```
-<br />  
 
 ## 4.1 David's Scoreとsteepness  
 算出する際、行列の名前が入っていなければいけないよう。  
@@ -35,7 +34,6 @@ $h'$に変わる指標として、**transitivity**という指標も提案され
 EloRating::transitivity(mat, runs = 1000)
 ```
 
-<br />  
 
 ## 4.3 おまけ(Elo-ratingの計算)    
 `EloRating`パッケージでは、他にも順位序列に関する様々な指標が求められるよう（例えば、時間的な順位の変化を考慮する**Elo-rating**など。詳細は[こちら](https://rdrr.io/cran/EloRating/f/inst/doc/EloRating_tutorial.pdf)）。  
@@ -75,7 +73,6 @@ Elo-ratingの時系列的変化は以下のように描画できる。
 eloplot(res)
 ```
 
-<br />  
 
 ## 4.4 おまけ(その他)  
 `EloRaing`パッケージでは、様々な論文で用いられている勝敗マトリクスのデータも豊富に取り込める。  
