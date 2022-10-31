@@ -1,15 +1,15 @@
 ---
-title: "Dominance Analysis"
+title: "Dominance Analysis Using R"
 author: "yamaguchi"
-date: '2022-08-30'
 date: "`r Sys.Date()`"
 output: 
   bookdown::gitbook:
     split_bib: yes  
     number_sections: FALSE  
     css: custom_style.css   
-site: bookdown::bookdown_site  
+site: bookdown::bookdown_site     
 documentclass: book  
+output_dir: "docs"
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{nccmath}

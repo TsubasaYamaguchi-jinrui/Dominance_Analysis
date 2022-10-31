@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1. David’s Scoreの算出 | Dominance Analysis Using R</title>
+  <meta name="description" content="1. David’s Scoreの算出 | Dominance Analysis Using R" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1. David’s Scoreの算出 | Dominance Analysis Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1. David’s Scoreの算出 | Dominance Analysis Using R" />
+  
+  
+  
+
+<meta name="author" content="yamaguchi" />
+
+
+<meta name="date" content="2022-10-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="パッケージの読み込み.html"/>
+<link rel="next" href="steepnessの算出.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="custom_style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>本稿の目的</a></li>
+<li class="chapter" data-level="" data-path="パッケージの読み込み.html"><a href="パッケージの読み込み.html"><i class="fa fa-check"></i>0. パッケージの読み込み</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html"><i class="fa fa-check"></i>1. David’s Scoreの算出</a></li>
+<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html"><i class="fa fa-check"></i>2. steepnessの算出</a></li>
+<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html"><i class="fa fa-check"></i>3. linearityの算出</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html"><i class="fa fa-check"></i>4. Elorating packageを用いた方法</a>
+<ul>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#davids-scoreとsteepness"><i class="fa fa-check"></i>4.1 David’s Scoreとsteepness</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#linearity"><i class="fa fa-check"></i>4.2 linearity</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけelo-ratingの計算"><i class="fa fa-check"></i>4.3 おまけ(Elo-ratingの計算)</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけその他"><i class="fa fa-check"></i>4.4 おまけ(その他)</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Dominance Analysis Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="davids-scoreの算出" class="section level1 hasAnchor">
+<h1>1. David’s Scoreの算出<a href="davids-scoreの算出.html#davids-scoreの算出" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>David’s Score(以下、DS)は、<strong>個体間の相対的なdominanceの差の違い</strong>を考慮して順位を算出してくれる指標である。<br />
+一般的には個体の順位を高い方から順に1位, 2位, 3位, …と等間隔に割り振っていくため、1位 vs 2位と2位 vs 3位の間のdominanceの差が同じとみなされる。<br />
+一方で、DSはその値の差が大きい個体間ほど、dominanceに差があることを表すことができる。<br />
+例えば、A, B, Cという個体のDSがそれぞれ2, 4, 7とすると、AとBの間のdominanceの差はBとCの差よりも小さいことになる。<br />
+なお、DSは値が高い個体ほど順位が高いことを表す。</p>
+<p><br /><br />
+それでは算出を行う。
+算出には、個体間の勝敗を記録したマトリックスを用いる。<br />
+本稿では、<span class="citation">(<a href="#ref-Vervaecke2007" role="doc-biblioref">Vervaecke et al. 2007</a>)</span>に載っている馬の攻撃交渉の勝敗データを用いる。<br />
+データはdata frameではなく、matrixとして読み込む必要があるので、csvファイルなどから読み込むときは必要に応じて<code>as.matrix()</code>でmatrix化する必要がある。</p>
+<p><strong>Rで直接マトリックスを作成する場合</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="davids-scoreの算出.html#cb2-1" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">58</span>,<span class="dv">50</span>,<span class="dv">61</span>,<span class="dv">32</span>,<span class="dv">37</span>,<span class="dv">29</span>,<span class="dv">39</span>,<span class="dv">25</span>,<span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">22</span>,<span class="dv">22</span>,<span class="dv">9</span>,<span class="dv">27</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">48</span>,</span>
+<span id="cb2-2"><a href="davids-scoreの算出.html#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">19</span>,<span class="dv">29</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">19</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">33</span>,<span class="dv">38</span>,<span class="dv">35</span>,<span class="dv">32</span>,<span class="dv">57</span>,</span>
+<span id="cb2-3"><a href="davids-scoreの算出.html#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">28</span>,<span class="dv">26</span>,<span class="dv">16</span>,<span class="dv">23</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">12</span>,</span>
+<span id="cb2-4"><a href="davids-scoreの算出.html#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>),</span>
+<span id="cb2-5"><a href="davids-scoreの算出.html#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">nrow=</span><span class="dv">9</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="davids-scoreの算出.html#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="davids-scoreの算出.html#cb2-7" aria-hidden="true" tabindex="-1"></a>individuals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;V&quot;</span>,<span class="st">&quot;VS&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;FJ&quot;</span>,<span class="st">&quot;PR&quot;</span>,<span class="st">&quot;VB&quot;</span>,<span class="st">&quot;TOR&quot;</span>,<span class="st">&quot;MU&quot;</span>,<span class="st">&quot;ZV&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href="davids-scoreの算出.html#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>()</span>
+<span id="cb2-9"><a href="davids-scoreの算出.html#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="davids-scoreの算出.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">##列名と行名を追加  </span></span>
+<span id="cb2-11"><a href="davids-scoreの算出.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mat) <span class="ot">&lt;-</span> individuals</span>
+<span id="cb2-12"><a href="davids-scoreの算出.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat) <span class="ot">&lt;-</span> individuals</span>
+<span id="cb2-13"><a href="davids-scoreの算出.html#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="davids-scoreの算出.html#cb2-14" aria-hidden="true" tabindex="-1"></a>mat</span></code></pre></div>
+<pre><code>##     V VS  B FJ PR VB TOR MU ZV
+## V   0 58 50 61 32 37  29 39 25
+## VS  8  0 22 22  9 27  20 10 48
+## B   3  3  0 19 29 12  13 19  8
+## FJ  5  8  9  0 33 38  35 32 57
+## PR  4  7  9  1  0 28  26 16 23
+## VB  4  3  0  0  6  0   7  6 12
+## TOR 2  0  4  1  4  4   0  5  3
+## MU  0  2  1  1  5  8   3  0 10
+## ZV  3  1  3  0  0  4   1  2  0</code></pre>
+<p><strong>csvファイルから読みこむ場合</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="davids-scoreの算出.html#cb4-1" aria-hidden="true" tabindex="-1"></a>mat2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;matrix.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="davids-scoreの算出.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 1列目を削除</span></span>
+<span id="cb4-3"><a href="davids-scoreの算出.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="davids-scoreの算出.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="do">## matrix形式に変換</span></span>
+<span id="cb4-5"><a href="davids-scoreの算出.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb4-6"><a href="davids-scoreの算出.html#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="davids-scoreの算出.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 行名を追加  </span></span>
+<span id="cb4-8"><a href="davids-scoreの算出.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat2) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(mat2)</span></code></pre></div>
+<p>DSを算出する際には、steepnessを算出する際にその値が0から1におさまるように標準化することが多い。<br />
+これをNormalized David’s Score(以下、nDS)という<span class="citation">(<a href="#ref-deVries2006" role="doc-biblioref">De Vries et al. 2006</a>)</span>。<br />
+算出する際には、個体間の勝率(<span class="math inline">\(P_ij\)</span>)を用いる方法と、勝率を試行数（何回敵対的交渉があったか）で補正した値(<span class="math inline">\(D_ij\)</span>)を用いる場合がある<span class="citation">(<a href="#ref-deVries2006" role="doc-biblioref">De Vries et al. 2006</a>)</span>。<br />
+de Vries et al. (2006)では後者が推奨されているようだが、十分に試行数がある場合には前者の方がいいと書いてある論文もあるようだ<span class="citation">(<a href="#ref-Bala2012" role="doc-biblioref">Balasubramaniam et al. 2012</a>)</span>。</p>
+<p><br/><br />
+それでは、それぞれ算出する。<br />
+微妙に値が異なることが分かる。</p>
+<p><strong>Pijを用いた場合</strong></p>
+<pre><code>##       NormDS
+## V   7.366095
+## VS  6.009971
+## B   5.060312
+## FJ  5.576360
+## PR  4.266966
+## VB  2.188967
+## TOR 2.199558
+## MU  2.264827
+## ZV  1.066945</code></pre>
+<p><strong>Dijを用いた場合</strong></p>
+<pre><code>##       NormDS
+## V   7.286151
+## VS  5.917860
+## B   4.976697
+## FJ  5.534913
+## PR  4.247536
+## VB  2.250670
+## TOR 2.223747
+## MU  2.333602
+## ZV  1.228824</code></pre>
+<p>以下では、<span class="math inline">\(D_ij\)</span>で算出した値を用いる。</p>
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Bala2012" class="csl-entry">
+Balasubramaniam KN, Dittmar K, Berman CM, et al (2012) Hierarchical steepness and phylogenetic models: Phylogenetic signals in macaca. Anim Behav 83:1207–1218
+</div>
+<div id="ref-deVries2006" class="csl-entry">
+De Vries H, Stevens JMG, Vervaecke H (2006) Measuring and testing the steepness of dominance hierarchies. Anim Behav 71:585–592
+</div>
+<div id="ref-Vervaecke2007" class="csl-entry">
+Vervaecke H, Stevens JMG, Vandemoortele H, et al (2007) Aggression and dominance in matched groups of subadult icelandic horses (equus caballus). J Ethol 25:239–248
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="パッケージの読み込み.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="steepnessの算出.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
