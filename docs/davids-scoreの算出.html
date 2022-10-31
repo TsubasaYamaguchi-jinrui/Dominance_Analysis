@@ -274,6 +274,10 @@ nDS_i = \{DS_i + N(N-1)/2\}/N
 それでは、算出する。<br />
 <span class="math inline">\(P_{ij}\)</span>と<span class="math inline">\(D_{ij}\)</span>を用いた場合で微妙に値が異なることが分かる。以下では、<span class="math inline">\(D_ij\)</span>で算出した値を用いる。</p>
 <p><span class="math inline">\(P_{ij}\)</span><strong>を用いた場合</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="davids-scoreの算出.html#cb5-1" aria-hidden="true" tabindex="-1"></a>nDS_p <span class="ot">&lt;-</span> <span class="fu">getNormDS</span>(mat,<span class="at">names=</span>individuals,<span class="at">method=</span><span class="st">&quot;Pij&quot;</span>)</span>
+<span id="cb5-2"><a href="davids-scoreの算出.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="davids-scoreの算出.html#cb5-3" aria-hidden="true" tabindex="-1"></a>nDS_p <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="davids-scoreの算出.html#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
 <pre><code>##       NormDS
 ## V   7.366095
 ## VS  6.009971
@@ -285,6 +289,10 @@ nDS_i = \{DS_i + N(N-1)/2\}/N
 ## MU  2.264827
 ## ZV  1.066945</code></pre>
 <p><span class="math inline">\(D_{ij}\)</span><strong>を用いた場合</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="davids-scoreの算出.html#cb7-1" aria-hidden="true" tabindex="-1"></a>nDS_d <span class="ot">&lt;-</span> <span class="fu">getNormDS</span>(mat,<span class="at">names=</span>individuals,<span class="at">method=</span><span class="st">&quot;Dij&quot;</span>)</span>
+<span id="cb7-2"><a href="davids-scoreの算出.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="davids-scoreの算出.html#cb7-3" aria-hidden="true" tabindex="-1"></a>nDS_d <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="davids-scoreの算出.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code></pre></div>
 <pre><code>##       NormDS
 ## V   7.286151
 ## VS  5.917860

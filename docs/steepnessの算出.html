@@ -208,31 +208,31 @@ steepnessは<strong>順位序列の厳しさ</strong>を表し、例えば専制
 <p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 <p>単回帰分析を行ってやれば、steepness(=傾き)は算出できる。
 今回の例では、傾きは約0.7421となることがわかる。</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="steepnessの算出.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## NDSが高い順に並べ替え  </span></span>
-<span id="cb7-2"><a href="steepnessの算出.html#cb7-2" aria-hidden="true" tabindex="-1"></a>nDS_d <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="steepnessの算出.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="steepnessの算出.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>NormDS) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-5"><a href="steepnessの算出.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="ot">-&gt;</span> nDS_d2</span>
-<span id="cb7-6"><a href="steepnessの算出.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="steepnessの算出.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 単回帰分析  </span></span>
-<span id="cb7-8"><a href="steepnessの算出.html#cb7-8" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>nDS_d2, NormDS<span class="sc">~</span>x)</span>
-<span id="cb7-9"><a href="steepnessの算出.html#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="steepnessの算出.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 傾き  </span></span>
-<span id="cb7-11"><a href="steepnessの算出.html#cb7-11" aria-hidden="true" tabindex="-1"></a>r<span class="sc">$</span>coefficients[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="steepnessの算出.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## NDSが高い順に並べ替え  </span></span>
+<span id="cb9-2"><a href="steepnessの算出.html#cb9-2" aria-hidden="true" tabindex="-1"></a>nDS_d <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="steepnessの算出.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="steepnessの算出.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>NormDS) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="steepnessの算出.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="ot">-&gt;</span> nDS_d2</span>
+<span id="cb9-6"><a href="steepnessの算出.html#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="steepnessの算出.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 単回帰分析  </span></span>
+<span id="cb9-8"><a href="steepnessの算出.html#cb9-8" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>nDS_d2, NormDS<span class="sc">~</span>x)</span>
+<span id="cb9-9"><a href="steepnessの算出.html#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="steepnessの算出.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 傾き  </span></span>
+<span id="cb9-11"><a href="steepnessの算出.html#cb9-11" aria-hidden="true" tabindex="-1"></a>r<span class="sc">$</span>coefficients[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] -0.7420538</code></pre>
 </div>
 <div id="steepnessパッケージを用いた算出" class="section level2 hasAnchor">
 <h2>2.2 steepnessパッケージを用いた算出<a href="steepnessの算出.html#steepnessパッケージを用いた算出" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>steepness</code>パッケージでは、わざわざ単回帰を行わなくてもsteepnessを算出することができる。</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="steepnessの算出.html#cb9-1" aria-hidden="true" tabindex="-1"></a>stp <span class="ot">&lt;-</span> steepness<span class="sc">::</span><span class="fu">steeptest</span>(mat, <span class="at">names =</span> individuals, </span>
-<span id="cb9-2"><a href="steepnessの算出.html#cb9-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">rep =</span> <span class="dv">1000</span>, <span class="at">method =</span> <span class="st">&quot;Dij&quot;</span>,</span>
-<span id="cb9-3"><a href="steepnessの算出.html#cb9-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-4"><a href="steepnessの算出.html#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="steepnessの算出.html#cb9-5" aria-hidden="true" tabindex="-1"></a>stp<span class="sc">$</span>Stp</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="steepnessの算出.html#cb11-1" aria-hidden="true" tabindex="-1"></a>stp <span class="ot">&lt;-</span> steepness<span class="sc">::</span><span class="fu">steeptest</span>(mat, <span class="at">names =</span> individuals, </span>
+<span id="cb11-2"><a href="steepnessの算出.html#cb11-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">rep =</span> <span class="dv">1000</span>, <span class="at">method =</span> <span class="st">&quot;Dij&quot;</span>,</span>
+<span id="cb11-3"><a href="steepnessの算出.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-4"><a href="steepnessの算出.html#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="steepnessの算出.html#cb11-5" aria-hidden="true" tabindex="-1"></a>stp<span class="sc">$</span>Stp</span></code></pre></div>
 <pre><code>## [1] 0.7420538</code></pre>
 <p>個体の勝敗がランダムに決まるときに比べて、steepnessが有意に高いかを検定することもできる。<br />
 結果、steepnessはランダムな場合よりも有意に高いことが分かる。</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="steepnessの算出.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stp)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="steepnessの算出.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stp)</span></code></pre></div>
 <pre><code>##      
 ## RESULTS OF STEEPNESS ANALYSIS OF THE MATRIX OF DYADIC DOMINANCES CORRECTED FOR CHANCE 
 ## ===================================================================================== 

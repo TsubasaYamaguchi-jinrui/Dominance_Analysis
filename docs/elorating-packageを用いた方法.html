@@ -203,13 +203,13 @@ div.csl-indent {
 <h1>4. Elorating packageを用いた方法<a href="elorating-packageを用いた方法.html#elorating-packageを用いた方法" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>なお、以上で算出した指標は<code>EloRating</code>パッケージ<span class="citation">(<a href="#ref-Neumann2011a" role="doc-biblioref">Neumann 2011</a>)</span>でも求めることができる。個人的にはデータフレームとして出力してくれるので、こちらの方が使いやすい。<br />
 <a href="https://rdrr.io/cran/EloRating/">詳細はこちら</a></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="elorating-packageを用いた方法.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EloRating)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="elorating-packageを用いた方法.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EloRating)</span></code></pre></div>
 <div id="davids-scoreとsteepness" class="section level2 hasAnchor">
 <h2>4.1 David’s Scoreとsteepness<a href="elorating-packageを用いた方法.html#davids-scoreとsteepness" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>算出する際、行列の名前が入っていなければいけないよう。</p>
 <p><strong>Davis’s Score</strong><br />
 <code>prop=</code>で”Dij”か”Pij”を指定。</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="elorating-packageを用いた方法.html#cb18-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">DS</span>(mat, <span class="at">prop =</span> <span class="st">&quot;Dij&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="elorating-packageを用いた方法.html#cb20-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">DS</span>(mat, <span class="at">prop =</span> <span class="st">&quot;Dij&quot;</span>)</span></code></pre></div>
 <pre><code>##    ID      DS normDS
 ## 1   V  29.575  7.286
 ## 2  VS  17.261  5.918
@@ -221,7 +221,7 @@ div.csl-indent {
 ## 8 TOR -15.986  2.224
 ## 9  ZV -24.941  1.229</code></pre>
 <p><strong>steepness</strong></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="elorating-packageを用いた方法.html#cb20-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">nrand =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="elorating-packageを用いた方法.html#cb22-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">nrand =</span> <span class="dv">10000</span>)</span></code></pre></div>
 <pre><code>##      steep   expected          p      nrand 
 ##     0.7421     0.3024     0.0001 10000.0000</code></pre>
 <p>同様の結果を得られた。<br />
@@ -231,7 +231,7 @@ div.csl-indent {
 <h2>4.2 linearity<a href="elorating-packageを用いた方法.html#linearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="math inline">\(h&#39;\)</span>は以下のように求められる。<br />
 同様の結果が得られた。</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="elorating-packageを用いた方法.html#cb22-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">h.index</span>(mat, <span class="at">loop =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="elorating-packageを用いた方法.html#cb24-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">h.index</span>(mat, <span class="at">loop =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>##         variable     value
 ## 1              N    9.0000
 ## 2        h index    0.9667
@@ -242,7 +242,7 @@ div.csl-indent {
 ## 7           tied    0.0000
 ## 8        unknown    0.0000</code></pre>
 <p><span class="math inline">\(h&#39;\)</span>に変わる指標として、<strong>transitivity</strong>という指標も提案されている<span class="citation">(<a href="#ref-Shizuka2012" role="doc-biblioref">Shizuka and McDonald 2012</a>)</span>。</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="elorating-packageを用いた方法.html#cb24-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">transitivity</span>(mat, <span class="at">runs =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="elorating-packageを用いた方法.html#cb26-1" aria-hidden="true" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">transitivity</span>(mat, <span class="at">runs =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>##       Pt     ttri        p     runs 
 ##    0.988    0.952    0.000 1000.000</code></pre>
 </div>
@@ -251,9 +251,9 @@ div.csl-indent {
 <p><code>EloRating</code>パッケージでは、他にも順位序列に関する様々な指標が求められるよう（例えば、時間的な順位の変化を考慮する<strong>Elo-rating</strong>など。詳細は<a href="https://rdrr.io/cran/EloRating/f/inst/doc/EloRating_tutorial.pdf">こちら</a>）。<br />
 <br/></p>
 <p>例えば、Elo-ratingは以下のような日付と勝敗が示されたデータをもちいて算出できる。</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="elorating-packageを用いた方法.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(adv)</span>
-<span id="cb26-2"><a href="elorating-packageを用いた方法.html#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="elorating-packageを用いた方法.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(adv)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="elorating-packageを用いた方法.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(adv)</span>
+<span id="cb28-2"><a href="elorating-packageを用いた方法.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="elorating-packageを用いた方法.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(adv)</span></code></pre></div>
 <pre><code>##         Date     Time winner loser
 ## 1 2010-01-01 15:38:13      b     c
 ## 2 2010-01-02 16:07:30      c     g
@@ -262,8 +262,8 @@ div.csl-indent {
 ## 5 2010-01-05 14:26:55      b     e
 ## 6 2010-01-06 17:31:02      d     f</code></pre>
 <p>Elo-ratingの計算。</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="elorating-packageを用いた方法.html#cb28-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv<span class="sc">$</span>winner, <span class="at">loser =</span> adv<span class="sc">$</span>loser, <span class="at">Date =</span> adv<span class="sc">$</span>Date)</span>
-<span id="cb28-2"><a href="elorating-packageを用いた方法.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="elorating-packageを用いた方法.html#cb30-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv<span class="sc">$</span>winner, <span class="at">loser =</span> adv<span class="sc">$</span>loser, <span class="at">Date =</span> adv<span class="sc">$</span>Date)</span>
+<span id="cb30-2"><a href="elorating-packageを用いた方法.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
 <pre><code>## Elo ratings from 7 individuals
 ## total (mean/median) number of interactions: 33 (9.4/9)
 ## range of interactions: 7 - 11 
@@ -273,10 +273,10 @@ div.csl-indent {
 ## k: 100 
 ## proportion of draws in the data set: 0</code></pre>
 <p>ある日付におけるElo-ratingは以下のように求められる。</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="elorating-packageを用いた方法.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_elo</span>(res, <span class="at">extractdate =</span> <span class="st">&quot;2010-01-28&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="elorating-packageを用いた方法.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb30-3"><a href="elorating-packageを用いた方法.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;Elo-rating&quot;</span> <span class="ot">=</span> <span class="st">&quot;.&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-4"><a href="elorating-packageを用いた方法.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;ID&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="elorating-packageを用いた方法.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_elo</span>(res, <span class="at">extractdate =</span> <span class="st">&quot;2010-01-28&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="elorating-packageを用いた方法.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="elorating-packageを用いた方法.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;Elo-rating&quot;</span> <span class="ot">=</span> <span class="st">&quot;.&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href="elorating-packageを用いた方法.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;ID&quot;</span>)</span></code></pre></div>
 <pre><code>##   ID Elo-rating
 ## 1  c       1207
 ## 2  b       1137
@@ -286,10 +286,10 @@ div.csl-indent {
 ## 6  g        878
 ## 7  a        743</code></pre>
 <p>日付を指定しなければ最終日のElo-ratingが求められる。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="elorating-packageを用いた方法.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_elo</span>(res) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="elorating-packageを用いた方法.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href="elorating-packageを用いた方法.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;Elo-rating&quot;</span> <span class="ot">=</span> <span class="st">&quot;.&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-4"><a href="elorating-packageを用いた方法.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;ID&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="elorating-packageを用いた方法.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_elo</span>(res) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="elorating-packageを用いた方法.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="elorating-packageを用いた方法.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;Elo-rating&quot;</span> <span class="ot">=</span> <span class="st">&quot;.&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="elorating-packageを用いた方法.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;ID&quot;</span>)</span></code></pre></div>
 <pre><code>##   ID Elo-rating
 ## 1  b       1203
 ## 2  c       1148
@@ -299,15 +299,15 @@ div.csl-indent {
 ## 6  g        843
 ## 7  a        704</code></pre>
 <p>Elo-ratingの時系列的変化は以下のように描画できる。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="elorating-packageを用いた方法.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eloplot</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="elorating-packageを用いた方法.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eloplot</span>(res)</span></code></pre></div>
 <p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 </div>
 <div id="おまけその他" class="section level2 hasAnchor">
 <h2>4.4 おまけ(その他)<a href="elorating-packageを用いた方法.html#おまけその他" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>EloRaing</code>パッケージでは、様々な論文で用いられている勝敗マトリクスのデータも豊富に取り込める。</p>
 <p>de Vries et al. (2006)のボノボのデータ。</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="elorating-packageを用いた方法.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(bonobos)</span>
-<span id="cb35-2"><a href="elorating-packageを用いた方法.html#cb35-2" aria-hidden="true" tabindex="-1"></a>bonobos</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="elorating-packageを用いた方法.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(bonobos)</span>
+<span id="cb37-2"><a href="elorating-packageを用いた方法.html#cb37-2" aria-hidden="true" tabindex="-1"></a>bonobos</span></code></pre></div>
 <pre><code>##    He Dz Ho De Ko Re Ki
 ## He  0  0  1  2 10 63  8
 ## Dz  0  0  2  3  0 88  4
@@ -317,7 +317,7 @@ div.csl-indent {
 ## Re  0  1  5  0 10  0  6
 ## Ki  0  0  0  0  0  2  0</code></pre>
 <p>nDSとsteepnessの算出。</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="elorating-packageを用いた方法.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DS</span>(bonobos,<span class="at">prop =</span> <span class="st">&quot;Dij&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="elorating-packageを用いた方法.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DS</span>(bonobos,<span class="at">prop =</span> <span class="st">&quot;Dij&quot;</span>)</span></code></pre></div>
 <pre><code>##   ID       DS normDS
 ## 1 He  10.9875  4.570
 ## 2 Dz   9.6891  4.384
@@ -326,12 +326,12 @@ div.csl-indent {
 ## 5 Ko  -7.2559  1.963
 ## 6 Re  -8.8494  1.736
 ## 7 Ki -12.8245  1.168</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="elorating-packageを用いた方法.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steepness</span>(bonobos,<span class="at">Dij=</span><span class="cn">TRUE</span>, <span class="at">nrand =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="elorating-packageを用いた方法.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">steepness</span>(bonobos,<span class="at">Dij=</span><span class="cn">TRUE</span>, <span class="at">nrand =</span> <span class="dv">10000</span>)</span></code></pre></div>
 <pre><code>##      steep   expected          p      nrand 
 ##     0.6284     0.2686     0.0001 10000.0000</code></pre>
 <p>de Vries (1998)のデータ。</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="elorating-packageを用いた方法.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(devries98)</span>
-<span id="cb41-2"><a href="elorating-packageを用いた方法.html#cb41-2" aria-hidden="true" tabindex="-1"></a>devries98</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="elorating-packageを用いた方法.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(devries98)</span>
+<span id="cb43-2"><a href="elorating-packageを用いた方法.html#cb43-2" aria-hidden="true" tabindex="-1"></a>devries98</span></code></pre></div>
 <pre><code>##   a v b h g w e k c y
 ## a 0 5 4 6 3 0 2 2 3 1
 ## v 0 0 0 0 2 1 2 0 7 7
@@ -344,7 +344,7 @@ div.csl-indent {
 ## c 0 0 0 0 0 1 0 2 0 6
 ## y 0 0 0 0 0 0 0 0 2 0</code></pre>
 <p><span class="math inline">\(h&#39;\)</span>とtransitivityの算出。</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="elorating-packageを用いた方法.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h.index</span>(devries98, <span class="at">loop =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="elorating-packageを用いた方法.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h.index</span>(devries98, <span class="at">loop =</span> <span class="dv">10000</span>)</span></code></pre></div>
 <pre><code>##         variable      value
 ## 1              N    10.0000
 ## 2        h index     0.5818
@@ -354,7 +354,7 @@ div.csl-indent {
 ## 6 randomizations 10000.0000
 ## 7           tied     1.0000
 ## 8        unknown    10.0000</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="elorating-packageを用いた方法.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(devries98, <span class="at">runs =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="elorating-packageを用いた方法.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(devries98, <span class="at">runs =</span> <span class="dv">10000</span>)</span></code></pre></div>
 <pre><code>##        Pt      ttri         p      runs 
 ##     0.907     0.630     0.010 10000.000</code></pre>
 

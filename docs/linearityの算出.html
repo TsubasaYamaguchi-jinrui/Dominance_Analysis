@@ -208,14 +208,14 @@ div.csl-indent {
 <div id="rを用いたlinearityの算出" class="section level2 hasAnchor">
 <h2>3.2 Rを用いたlinearityの算出<a href="linearityの算出.html#rを用いたlinearityの算出" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>compete</code>パッケージを用いて以下のように算出することができる。</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="linearityの算出.html#cb13-1" aria-hidden="true" tabindex="-1"></a>lin <span class="ot">&lt;-</span> <span class="fu">devries</span>(mat, <span class="at">Nperms =</span> <span class="dv">10000</span>)</span>
-<span id="cb13-2"><a href="linearityの算出.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="linearityの算出.html#cb13-3" aria-hidden="true" tabindex="-1"></a>lin<span class="sc">$</span><span class="st">`</span><span class="at">h-modified</span><span class="st">`</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="linearityの算出.html#cb15-1" aria-hidden="true" tabindex="-1"></a>lin <span class="ot">&lt;-</span> <span class="fu">devries</span>(mat, <span class="at">Nperms =</span> <span class="dv">10000</span>)</span>
+<span id="cb15-2"><a href="linearityの算出.html#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="linearityの算出.html#cb15-3" aria-hidden="true" tabindex="-1"></a>lin<span class="sc">$</span><span class="st">`</span><span class="at">h-modified</span><span class="st">`</span></span></code></pre></div>
 <pre><code>## [1] 0.9667</code></pre>
 <p><span class="math inline">\(h&#39;\)</span>は0.9667なので、順位序列の直線性はかなり高いことが分かる。<br />
 個体の勝敗がランダムに割り振られたときと比較して<span class="math inline">\(h&#39;\)</span>が有意に高いかも検定することができる。<br />
 今回は、有意に高いことが示された。</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="linearityの算出.html#cb15-1" aria-hidden="true" tabindex="-1"></a>lin<span class="sc">$</span><span class="st">`</span><span class="at">p-value</span><span class="st">`</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="linearityの算出.html#cb17-1" aria-hidden="true" tabindex="-1"></a>lin<span class="sc">$</span><span class="st">`</span><span class="at">p-value</span><span class="st">`</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 
 </div>
