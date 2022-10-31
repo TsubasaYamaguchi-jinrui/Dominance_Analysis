@@ -30,3 +30,4 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
 - David's Scoreの算出  
 - steepnessの算出  
 - linearity(h')の算出  
+- Elo-rating scoreの算出
