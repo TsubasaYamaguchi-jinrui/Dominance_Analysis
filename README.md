@@ -4,6 +4,4 @@
 
 - David's Scoreの算出  
 - steepnessの算出  
-- linearity(h')の算出 
-- Elo-rating scoreの算出　　
-
+- linearity(h')の算出  
