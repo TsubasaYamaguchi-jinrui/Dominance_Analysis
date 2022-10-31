@@ -1,46 +1,61 @@
 h1 {
-font-size: 24px;
-font-family: "Meiryo";
+  font-size: 21px;
+  font-family: "Meiryo";
+  margin-bottom: -25px;
 }
 
 h2 {
-font-size: 20px;
-font-family: "Meiryo";
-margin-top: 2rem;
-margin-bottom: 1rem;
+  font-size: 19px;
+  font-family: "Meiryo";
+  margin-bottom: -25px;
 }
 
 h3 {
-font-size: 18px;
-font-family: "Meiryo";
+  font-size: 18px;
+  font-family: "Meiryo";
+  margin-top: -20px; 
 }
 
 h4 {
-font-size: 16px;
-font-family: "Meiryo";
+  font-size: 18px;
+  font-family: "Meiryo";
+  margin-top: -25px; 
 }
 
 p {
-font-size: 15px;
-font-family: "Meiryo";
+  font-family: "Meiryo";
+  font-size: 16.5px;
 }
 
 ul {
-font-size: 13.5px;
-font-family: "Meiryo";
+  font-size: 15.5px;
+  font-family: "Meiryo";
 }
 
 ol {
-font-size: 13.5px;
-font-family: "Meiryo";
+  font-size: 15.5px;
+  font-family: "Meiryo";
 }
 
 li {
-font-size: 13.5px;
-font-family: "Meiryo";
+  font-size: 15.5px;
+  font-family: "Meiryo";
+  margin-bottom: 10px; 
 }
 
-.math{
-font-size: 13px;
-line-height: 14px;
+.math {
+  font-size: 14px;
+  line-height: 15.5px;
+}
+
+p.caption {
+  margin-bottom: 50px; 
+  font-style: italic;
+  font-size: 13.5px;
+  color: gray;
+  font-weight: bold;
+}
+
+#TOC {
+  margin: -15px;
 }
