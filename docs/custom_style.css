@@ -7,16 +7,15 @@ h2 {
 font-size: 20px;
 font-family: "Meiryo";
 margin-top: 2rem;
+margin-bottom: 1rem;
 }
 
 h3 {
-margin-top: 1.5em;
 font-size: 18px;
 font-family: "Meiryo";
 }
 
 h4 {
-margin-top: 1.5em;
 font-size: 16px;
 font-family: "Meiryo";
 }
@@ -24,7 +23,6 @@ font-family: "Meiryo";
 p {
 font-size: 15px;
 font-family: "Meiryo";
-margin-bottom: 1rem;
 }
 
 ul {
