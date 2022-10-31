@@ -1,8 +1,7 @@
-# 2. steepnessの算出  
+# 2. Steepnessの算出  
+## 2.1 Steepnessとは
 続いて、順位序列のsteepnessを算出する。  
-steepnessは**順位序列の厳しさ**を表し、例えば専制的な種ほどその値は高くなるとされる[@Bala2012]。  
-X軸に順位が高い個体から名前を並べ、Y軸にnDSをプロットするとき、その回帰直線の傾きがsteepnessとなる。  
-0から1の値を取り、1に近づくほどsteepnessが高いことを示す。  
+steepnessは**順位序列の厳しさ**を表し、例えば専制的な種ほどその値は高くなるとされる[@Bala2012]。X軸に順位が高い個体から名前を並べ、Y軸にnDSをプロットするとき、その**回帰直線の傾き**がsteepnessとなる。0から1の値を取り、1に近づくほどsteepnessが高いことを示す。  
 
 ```{r, echo = FALSE}
 nDS_d %>% 
@@ -29,8 +28,8 @@ nDS_d2 %>%
   theme(aspect.ratio=0.7)
 ```
 
-それでは、steepness(=傾き)はいくつになるだろうか。  
-単回帰分析を行ってやると、その値は約0.7421となることがわかる。  
+単回帰分析を行ってやれば、steepness(=傾き)は算出できる。 
+今回の例では、傾きは約0.7421となることがわかる。  
 ```{r}
 ## NDSが高い順に並べ替え  
 nDS_d %>% 
@@ -41,10 +40,13 @@ nDS_d %>%
 ## 単回帰分析  
 r <- lm(data=nDS_d2, NormDS~x)
 
-## 単回帰分析の結果  
+## 傾き  
 r$coefficients[[2]]
 ```
 
+<br/>  
+
+## 2.2 steepnessパッケージを用いた算出  
 `steepness`パッケージでは、わざわざ単回帰を行わなくてもsteepnessを算出することができる。    
 ```{r}
 stp <- steepness::steeptest(mat, names = individuals, 
