@@ -1,0 +1,32 @@
+---
+title: "Dominance Analysis"
+author: "yamaguchi"
+date: '2022-08-30'
+date: "`r Sys.Date()`"
+output: 
+  bookdown::gitbook:
+    split_bib: yes  
+    number_sections: FALSE  
+    css: custom_style.css   
+site: bookdown::bookdown_site  
+documentclass: book  
+header-includes:
+   - \usepackage{amsmath}
+   - \usepackage{nccmath}
+bibliography: reference.bib   
+csl: "primates.csl"
+link-citations: yes
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE,
+                      warning = FALSE, fig.align = "left")
+```
+
+# 本稿の目的  
+本稿では、順位に関する様々な指標をRを用いて算出するデモを行う。  
+主に扱う内容は以下のとおりである。  
+
+- David's Scoreの算出  
+- steepnessの算出  
+- linearity(h')の算出  

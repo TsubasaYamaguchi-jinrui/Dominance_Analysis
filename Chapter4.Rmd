@@ -1,0 +1,101 @@
+# 4. Elorating packageを用いた方法  
+なお、以上で算出した指標は`EloRating`パッケージ[@Neumann2011a]でも求めることができる。個人的にはデータフレームとして出力してくれるので、こちらの方が使いやすい。    
+[詳細はこちら](https://rdrr.io/cran/EloRating/)  
+```{r}
+library(EloRating)
+```
+
+## 4.1 David's Scoreとsteepness  
+算出する際、行列の名前が入っていなければいけないよう。  
+
+**Davis's Score**  
+`prop=`で"Dij"か"Pij"を指定。  
+```{r}
+EloRating::DS(mat, prop = "Dij")
+```
+
+**steepness**  
+```{r}
+EloRating::steepness(mat, nrand = 10000)
+```
+
+同様の結果を得られた。  
+
+## 4.2 linearity  
+$h'$は以下のように求められる。  
+同様の結果が得られた。  
+```{r}
+EloRating::h.index(mat, loop = 1000)
+```
+
+$h'$に変わる指標として、**transitivity**という指標も提案されている[@Shizuka2012]。  
+```{r}
+EloRating::transitivity(mat, runs = 1000)
+```
+
+
+## 4.3 おまけ(Elo-ratingの計算)    
+`EloRating`パッケージでは、他にも順位序列に関する様々な指標が求められるよう（例えば、時間的な順位の変化を考慮する**Elo-rating**など。詳細は[こちら](https://rdrr.io/cran/EloRating/f/inst/doc/EloRating_tutorial.pdf)）。  
+<br/>  
+
+例えば、Elo-ratingは以下のような日付と勝敗が示されたデータをもちいて算出できる。  
+```{r}
+data(adv)
+
+head(adv)
+```
+
+Elo-ratingの計算。  
+```{r}
+res <- elo.seq(winner = adv$winner, loser = adv$loser, Date = adv$Date)
+summary(res)
+```
+
+ある日付におけるElo-ratingは以下のように求められる。  
+```{r}
+extract_elo(res, extractdate = "2010-01-28") %>% 
+  data.frame() %>% 
+  rename("Elo-rating" = ".") %>% 
+  rownames_to_column(var = "ID")
+```
+
+日付を指定しなければ最終日のElo-ratingが求められる。
+```{r}
+extract_elo(res) %>% 
+  data.frame() %>% 
+  rename("Elo-rating" = ".") %>% 
+  rownames_to_column(var = "ID")
+```
+
+Elo-ratingの時系列的変化は以下のように描画できる。  
+```{r}
+eloplot(res)
+```
+
+## 4.4 おまけ(その他)  
+`EloRaing`パッケージでは、様々な論文で用いられている勝敗マトリクスのデータも豊富に取り込める。  
+
+de Vries et al. (2006)のボノボのデータ。  
+```{r}
+data(bonobos)
+bonobos
+```
+
+nDSとsteepnessの算出。  
+```{r}
+DS(bonobos,prop = "Dij")
+
+steepness(bonobos,Dij=TRUE, nrand = 10000)
+```
+
+de Vries (1998)のデータ。  
+```{r}
+data(devries98)
+devries98
+```
+
+$h'$とtransitivityの算出。  
+```{r}
+h.index(devries98, loop = 10000)
+transitivity(devries98, runs = 10000)
+```
