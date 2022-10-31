@@ -7,9 +7,9 @@ output:
     split_bib: yes  
     number_sections: FALSE  
     css: custom_style.css   
-site: bookdown::bookdown_site     
-documentclass: book  
+site: bookdown::bookdown_site   
 output_dir: "docs"
+documentclass: book  
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{nccmath}
