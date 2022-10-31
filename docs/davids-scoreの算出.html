@@ -23,7 +23,7 @@
 <meta name="author" content="Tsubasa Yamaguchi" />
 
 
-<meta name="date" content="2022-10-31" />
+<meta name="date" content="2022-11-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,7 +219,7 @@ div.csl-indent {
 \]</span>
 このとき、個体<span class="math inline">\(i\)</span>のDS(<span class="math inline">\(DS_i\)</span>)は以下のように定義される。<br />
 <span class="math display">\[
-DS_i = w_i + w_{2i} + l_i + l_{2i}
+DS_i = w_i + w_{2i} - l_i - l_{2i}
 \]</span>
 なお、個体ごとの敵対的交渉(<span class="math inline">\(n_ij\)</span>)の試行数の違いを考慮するため、<span class="math inline">\(P_{ij}\)</span>のかわりに以下の<span class="math inline">\(D_{ij}\)</span>を、<span class="math inline">\(P_{ji}\)</span>の代わりに<span class="math inline">\(D_{ji} = 1- D_{ij}\)</span>用いてDSの算出を算出することもある。詳細は <span class="citation">De Vries et al. (<a href="#ref-deVries2006" role="doc-biblioref">2006</a>)</span> を参照。 <span class="citation">De Vries et al. (<a href="#ref-deVries2006" role="doc-biblioref">2006</a>)</span> では<span class="math inline">\(D_{ij}\)</span>を使う方法が推奨されているようだが、十分に試行数がある場合には<span class="math inline">\(P_{ij}\)</span>を使う方がいいと書いてある論文もあるようだ<span class="citation">(<a href="#ref-Bala2012" role="doc-biblioref">Balasubramaniam et al. 2012</a>)</span>。</p>
 <p><span class="math display">\[
