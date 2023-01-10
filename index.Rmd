@@ -13,14 +13,16 @@ documentclass: book
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{nccmath}
+biblio-style: jecon    
 bibliography: reference.bib   
-csl: "primates.csl"
-link-citations: yes  
+link-citations: yes
+csl: primates.csl
 ---
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE,
-                      warning = FALSE, fig.align = "left")
+                      warning = FALSE, fig.align = "left",
+                      cache = TRUE)
 ```
 
 # 本稿の目的  
