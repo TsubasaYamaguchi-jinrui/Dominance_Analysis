@@ -1,3 +1,4 @@
+
 # 2. Steepnessの算出  
 ## 2.1 Steepnessとは
 続いて、順位序列のsteepnessを算出する。  
@@ -59,3 +60,4 @@ stp$Stp
 ```{r}
 summary(stp)
 ```
+

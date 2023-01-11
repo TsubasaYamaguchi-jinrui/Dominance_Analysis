@@ -5,24 +5,21 @@ date: "`r Sys.Date()`"
 output: 
   bookdown::gitbook:
     split_bib: yes  
-    number_sections: FALSE  
+    number_sections: false    
     css: custom_style.css   
 site: bookdown::bookdown_site   
-output_dir: "docs"
 documentclass: book  
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{nccmath}
-biblio-style: jecon    
 bibliography: reference.bib   
 link-citations: yes
-csl: primates.csl
+csl: "primates.csl"
 ---
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE,
-                      warning = FALSE, fig.align = "left",
-                      cache = TRUE)
+                      warning = FALSE, fig.align = "left")
 ```
 
 # 本稿の目的  
@@ -35,3 +32,4 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
 - Elo-rating scoreの算出  
 
 なお、本稿の作成に使用したファイルやRのコードは筆者の[Github](https://github.com/TsubasaYamaguchi-jinrui/Dominance_Analysis)で全て閲覧できる。  
+

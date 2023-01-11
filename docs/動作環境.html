@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>動作環境 | Dominance Analysis Using R</title>
+  <meta name="description" content="動作環境 | Dominance Analysis Using R" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="動作環境 | Dominance Analysis Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="動作環境 | Dominance Analysis Using R" />
+  
+  
+  
+
+<meta name="author" content="Tsubasa Yamaguchi" />
+
+
+<meta name="date" content="2023-01-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="elorating-packageを用いた方法.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="custom_style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>本稿の目的</a></li>
+<li class="chapter" data-level="" data-path="パッケージの読み込み.html"><a href="パッケージの読み込み.html"><i class="fa fa-check"></i>0. パッケージの読み込み</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html"><i class="fa fa-check"></i>1. David’s Scoreの算出</a>
+<ul>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#davids-scoreとは"><i class="fa fa-check"></i>1.1 David’s Scoreとは</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#dsの定義"><i class="fa fa-check"></i>1.2 DSの定義</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#normalized-davids-scoreの定義"><i class="fa fa-check"></i>1.3 Normalized David’s Scoreの定義　　</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#rでのnormalized-davids-scoreの算出方法"><i class="fa fa-check"></i>1.4 RでのNormalized David’s Scoreの算出方法</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html"><i class="fa fa-check"></i>2. Steepnessの算出</a>
+<ul>
+<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#steepnessとは"><i class="fa fa-check"></i>2.1 Steepnessとは</a></li>
+<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#steepnessパッケージを用いた算出"><i class="fa fa-check"></i>2.2 steepnessパッケージを用いた算出</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html"><i class="fa fa-check"></i>3. Linearityの算出</a>
+<ul>
+<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html#linearityとは"><i class="fa fa-check"></i>3.1 Linearityとは</a></li>
+<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html#rを用いたlinearityの算出"><i class="fa fa-check"></i>3.2 Rを用いたlinearityの算出</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html"><i class="fa fa-check"></i>4. Elorating packageを用いた方法</a>
+<ul>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#davids-scoreとsteepness"><i class="fa fa-check"></i>4.1 David’s Scoreとsteepness</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#linearity"><i class="fa fa-check"></i>4.2 linearity</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけelo-ratingの計算"><i class="fa fa-check"></i>4.3 おまけ(Elo-ratingの計算)</a></li>
+<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけその他"><i class="fa fa-check"></i>4.4 おまけ(その他)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="動作環境.html"><a href="動作環境.html"><i class="fa fa-check"></i>動作環境</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Dominance Analysis Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="動作環境" class="section level1 hasAnchor">
+<h1>動作環境<a href="動作環境.html#動作環境" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="動作環境.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.2.2 (2022-10-31 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 22621)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=Japanese_Japan.utf8  LC_CTYPE=Japanese_Japan.utf8   
+## [3] LC_MONETARY=Japanese_Japan.utf8 LC_NUMERIC=C                   
+## [5] LC_TIME=Japanese_Japan.utf8    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] EloRating_0.46.11    sna_2.7              network_1.18.0      
+##  [4] statnet.common_4.7.0 zoo_1.8-11           see_0.7.4           
+##  [7] report_0.5.5         parameters_0.20.0    performance_0.10.1  
+## [10] modelbased_0.8.5     insight_0.18.8       effectsize_0.8.2    
+## [13] datawizard_0.6.5     correlation_0.8.3    bayestestR_0.13.0   
+## [16] easystats_0.6.0      forcats_0.5.2        stringr_1.5.0       
+## [19] dplyr_1.0.10         purrr_1.0.0          readr_2.1.3         
+## [22] tidyr_1.2.1          tibble_3.1.8         ggplot2_3.4.0       
+## [25] tidyverse_1.3.2      compete_0.1          steepness_0.3-0     
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-160        fs_1.5.2            lubridate_1.9.0    
+##  [4] httr_1.4.4          tools_4.2.2         backports_1.4.1    
+##  [7] bslib_0.4.2         utf8_1.2.2          R6_2.5.1           
+## [10] mgcv_1.8-41         DBI_1.1.3           colorspace_2.0-3   
+## [13] withr_2.5.0         tidyselect_1.2.0    emmeans_1.8.3      
+## [16] compiler_4.2.2      cli_3.6.0           rvest_1.0.3        
+## [19] xml2_1.3.3          bookdown_0.31       sass_0.4.4         
+## [22] scales_1.2.1        mvtnorm_1.1-3       digest_0.6.31      
+## [25] rmarkdown_2.19      pkgconfig_2.0.3     htmltools_0.5.4    
+## [28] highr_0.10          dbplyr_2.2.1        fastmap_1.1.0      
+## [31] rlang_1.0.6         readxl_1.4.1        rstudioapi_0.14    
+## [34] farver_2.1.1        jquerylib_0.1.4     generics_0.1.3     
+## [37] jsonlite_1.8.4      googlesheets4_1.0.1 magrittr_2.0.3     
+## [40] Matrix_1.5-1        Rcpp_1.0.9          munsell_0.5.0      
+## [43] fansi_1.0.3         lifecycle_1.0.3     stringi_1.7.8      
+## [46] yaml_2.3.6          grid_4.2.2          crayon_1.5.2       
+## [49] lattice_0.20-45     splines_4.2.2       haven_2.5.1        
+## [52] hms_1.1.2           knitr_1.41          pillar_1.8.1       
+## [55] igraph_1.3.5        estimability_1.4.1  reprex_2.0.2       
+## [58] glue_1.6.2          evaluate_0.19       modelr_0.1.10      
+## [61] Rdpack_2.4          vctrs_0.5.1         tzdb_0.3.0         
+## [64] cellranger_1.1.0    gtable_0.3.1        assertthat_0.2.1   
+## [67] cachem_1.0.6        xfun_0.36           rbibutils_2.2.12   
+## [70] xtable_1.8-4        broom_1.0.2         coda_0.19-4        
+## [73] googledrive_2.0.0   gargle_1.2.1        timechange_0.1.1   
+## [76] ellipsis_0.3.2</code></pre>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Balasubramaniam KN, Dittmar K, Berman CM, et al (2012) Hierarchical steepness and phylogenetic models: Phylogenetic signals in macaca. Anim Behav 83:1207–1218
+</div>
+<div class="csl-entry">
+Curley J (2016) <a href="https://rdrr.io/cran/compete/">Compete: Analyzing competitive interaction data: R package version 0.1</a>
+</div>
+<div class="csl-entry">
+De Vries H (1995) An improved test of linearity in dominance hierarchies containing unknown or tied relationships. Anim Behav 50:1375–1389
+</div>
+<div class="csl-entry">
+De Vries H, Stevens JMG, Vervaecke H (2006) Measuring and testing the steepness of dominance hierarchies. Anim Behav 71:585–592
+</div>
+<div class="csl-entry">
+Leiva H, De Vries H (2014) <a href="https://rdrr.io/cran/steepness/man/steepness-package.html">Testing steepness of dominance hierarchie</a>
+</div>
+<div class="csl-entry">
+Neumann C (2011) <a href="https://rdrr.io/cran/EloRating/">EloRating: Animal dominance hierarchies by elo rating</a>
+</div>
+<div class="csl-entry">
+Shizuka D, McDonald DB (2012) A social network perspective on measurements of dominance hierarchies. Anim Behav 83:925–934
+</div>
+<div class="csl-entry">
+Vervaecke H, Stevens JMG, Vandemoortele H, et al (2007) Aggression and dominance in matched groups of subadult icelandic horses (equus caballus). J Ethol 25:239–248
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="elorating-packageを用いた方法.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

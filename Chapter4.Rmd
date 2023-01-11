@@ -1,3 +1,4 @@
+
 # 4. Elorating packageを用いた方法  
 なお、以上で算出した指標は`EloRating`パッケージ[@Neumann2011a]でも求めることができる。個人的にはデータフレームとして出力してくれるので、こちらの方が使いやすい。    
 [詳細はこちら](https://rdrr.io/cran/EloRating/)  

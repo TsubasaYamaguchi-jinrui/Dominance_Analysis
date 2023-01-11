@@ -1,3 +1,4 @@
+
 # 1. David's Scoreの算出  
 
 ## 1.1 David's Scoreとは  
