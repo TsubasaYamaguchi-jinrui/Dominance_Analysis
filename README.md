@@ -1,5 +1,5 @@
 # 本稿の目的  
-本稿では、順位に関する様々な指標をRを用いて算出するデモを行う。  
+本稿では、順位に関する様々な指標をRを用いて算出するデモを行う。本文は[こちらから](https://tsubasayamaguchi-jinrui.github.io/Dominance_Analysis/)。      
 主に扱う内容は以下のとおりである。  
 
 - David's Scoreの算出  
