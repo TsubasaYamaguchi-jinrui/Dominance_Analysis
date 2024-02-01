@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
 
 - David's Scoreの算出  
 - steepnessの算出  
-- linearity($h'$と$t_{tri}$)の算出  
+- linearity($h'$とtriangle transivity($t_{tri}$))の算出  
 - Elo-rating scoreの算出  
 
 なお、本稿の作成に使用したファイルやRのコードは筆者の[Github](https://github.com/TsubasaYamaguchi-jinrui/Dominance_Analysis)で全て閲覧できる。  
