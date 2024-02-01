@@ -17,10 +17,13 @@ $$
   l_{2i} &= \sum_{j=1}^{N} l_jP_{ji} \;\; (j \neq i) \;\; \text{(個体}j\text{の}l_j\text{で重みづけした個体}i\text{の敗率の合計)}\\
 \end{aligned}
 $$
+
 このとき、個体$i$のDS($DS_i$)は以下のように定義される。  
+
 $$
 DS_i = w_i + w_{2i} - l_i - l_{2i} 
 $$
+
 なお、個体ごとの敵対的交渉($n_ij$)の試行数の違いを考慮するため、$P_{ij}$のかわりに以下の$D_{ij}$を、$P_{ji}$の代わりに$D_{ji} = 1- D_{ij}$用いてDSの算出を算出することもある。詳細は @deVries2006 を参照。 @deVries2006 では$D_{ij}$を使う方法が推奨されているようだが、十分に試行数がある場合には$P_{ij}$を使う方がいいと書いてある論文もあるようだ[@Bala2012]。    
 
 $$
@@ -28,13 +31,13 @@ D_ij = P_{ij} - \{(P_{ij}-0.5)/(n_{ij}+1)\}
 $$
 
 ## 1.3 Normalized David's Scoreの定義　　
-DSを算出する際には、steepness(後述)を算出する際にその値が0から1におさまるように標準化することが多い。これをNormalized David's Score(以下、nDS)という[@deVries2006]。nDSは以下の式で計算される。これによって、nDSは0から$N-1$の間に収まる。  
+DSを算出する際には、steepness(後述)を算出する際にその値が0から1におさまるように標準化することが多い。これを**Normalized David's Score(以下、nDS)**という[@deVries2006]。nDSは以下の式で計算される。これによって、nDSは0から$N-1$の間に収まる。  
 
 $$
 nDS_i = \{DS_i + N(N-1)/2\}/N
 $$
 
-## 1.4 RでのNormalized David's Scoreの算出方法
+## 1.4 Rでの算出方法
 それではRでnDSの算出を行う。本稿では、 @Vervaecke2007 に載っている馬の攻撃交渉の勝敗データを用いる。データはdata frameではなく、matrix(隣接行列)として読み込む必要があるので、csvファイルなどから読み込むときは必要に応じて`as.matrix()`でmatrix化する必要がある。  
 
 **Rで直接マトリックスを作成する場合**  
@@ -63,21 +66,19 @@ mat2 <- read.csv("matrix.csv", row.names = 1) %>%
 ```
 
 <br/>  
-それでは、算出する。  
-$P_{ij}$と$D_{ij}$を用いた場合で微妙に値が異なることが分かる。以下では、$D_ij$で算出した値を用いる。  
+それでは、算出する。`EloRating`パッケージの`DS`関数を用い、`prop =`で`Pij`か`Dij`を指定する。  
+結果を確認すると、$P_{ij}$と$D_{ij}$を用いた場合で微妙に値が異なることが分かる。
 
 $P_{ij}$**を用いた場合**  
 ```{r}
-nDS_p <- getNormDS(mat,names=individuals,method="Pij")
+nDS_p <- EloRating::DS(mat, prop = "Pij")
 
-nDS_p %>% 
-  data.frame()
+nDS_p 
 ```
 
 $D_{ij}$**を用いた場合**    
 ```{r}
-nDS_d <- getNormDS(mat,names=individuals,method="Dij")
+nDS_d <- EloRating::DS(mat, prop = "Dij")
 
-nDS_d %>% 
-  data.frame()
+nDS_d 
 ```

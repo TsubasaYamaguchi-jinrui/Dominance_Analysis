@@ -1,104 +1,65 @@
+# 4. Elo-ratingの算出    
+## 4.1 Elo-ratingとは  
+**Elo-rating**とは、各個体の相対的な強さを表す指標であり、そのときどきの勝敗によって常に変動する。主にサッカーやチェス、将棋などの競技で用いられている。時系列的に指標の変化を調べることができ、交渉結果によって指標が随時更新されていくという点で他の順位関連指標(e.g., David's score)とは異なる[cf. @Albers2001]。        
 
-# 4. Elorating packageを用いた方法  
-なお、以上で算出した指標は`EloRating`パッケージ[@Neumann2011a]でも求めることができる。個人的にはデータフレームとして出力してくれるので、こちらの方が使いやすい。    
-[詳細はこちら](https://rdrr.io/cran/EloRating/)  
-```{r}
-library(EloRating)
-```
+**Elo-rating**では、交渉のたびに交渉前のレーティングから予想される勝利確率と実際の交渉結果を比較し、これらがどの程度違うかによってレーティングを更新していく。具体的には、個体$A$と$B$のレーティングを$R_A, R_B$、個体$A$が$B$に勝つ確率を$p_{AB}$とするとき、交渉後のレーティング($R_{Anew}, R_{Bnew}$)は以下のように変化する[@Neumann2011]。なお、$k$は定数で自由に設定できる。$k$が大きいほど1回の交渉がレーティングに与える影響が大きくなる。    
 
-## 4.1 David's Scoreとsteepness  
-算出する際、行列の名前が入っていなければいけないよう。  
+**Aが勝った場合**  
+$$
+R_{Anew} = R_A + (1-p_{AB})\times k\\
+R_{Bnew} = R_B - (1-p_{AB})\times k
+$$
 
-**Davis's Score**  
-`prop=`で"Dij"か"Pij"を指定。  
-```{r}
-EloRating::DS(mat, prop = "Dij")
-```
-
-**steepness**  
-```{r}
-EloRating::steepness(mat, nrand = 10000)
-```
-
-同様の結果を得られた。  
-<br />  
-
-## 4.2 linearity  
-$h'$は以下のように求められる。  
-同様の結果が得られた。  
-```{r}
-EloRating::h.index(mat, loop = 1000)
-```
-
-$h'$に変わる指標として、**transitivity**という指標も提案されている[@Shizuka2012]。  
-```{r}
-EloRating::transitivity(mat, runs = 1000)
-```
-
-
-## 4.3 おまけ(Elo-ratingの計算)    
-`EloRating`パッケージでは、他にも順位序列に関する様々な指標が求められるよう（例えば、時間的な順位の変化を考慮する**Elo-rating**など。詳細は[こちら](https://rdrr.io/cran/EloRating/f/inst/doc/EloRating_tutorial.pdf)）。  
+**Bが勝った場合**  
+$$
+R_{Anew} = R_A - p_{AB}\times k\\
+R_{Bnew} = R_B + p_{AB}\times k
+$$
 <br/>  
 
-例えば、Elo-ratingは以下のような日付と勝敗が示されたデータをもちいて算出できる。  
+なお、交渉前の勝利確率$p_{AB}$は以下の式で計算される(Wikipediaより)。  
+$$
+p_{AB} = \frac{1}{10^{(R_B - R_A)/400} + 1}
+$$
+
+## 4.2 Rを用いた算出と可視化  
+`EloRating`パッケージを用いたElo-ratingの詳しい算出方法については、[こちら](https://cran.r-project.org/web/packages/EloRating/vignettes/EloRating_tutorial.pdf)を参照。  
+
+`EloRating`パッケージでは、以下のような日付と勝敗が示されたデータを用いてElo-ratingを算出する。  
 ```{r}
 data(adv)
 
-head(adv)
+adv
 ```
+<br/>  
 
-Elo-ratingの計算。  
+Elo-ratingは`elo.seq`関数を用いて算出できる。`winner =`に勝者の列の値を、`loser =`に敗者の列の値を、`Date`で日付を、`k =`で$k$を指定する。その他の引数については、`?elo.seq`を参照。  
+
 ```{r}
-res <- elo.seq(winner = adv$winner, loser = adv$loser, Date = adv$Date)
+res <- elo.seq(winner = adv$winner, loser = adv$loser, Date = adv$Date,
+               k = 100)
+```
+<br/>  
+
+`summary`関数で日付の範囲や交渉の数などの基本情報を確認できる。
+```{r}
 summary(res)
 ```
+<br/>  
 
-ある日付におけるElo-ratingは以下のように求められる。  
+ある日付におけるElo-ratingは`extract_elo`関数で以下のように求められる。`extractdate =`で日付を、`ids =`で値を求めたい個体名を指定する(指定しなければ全個体について出力する)。    
 ```{r}
-extract_elo(res, extractdate = "2010-01-28") %>% 
-  data.frame() %>% 
-  rename("Elo-rating" = ".") %>% 
-  rownames_to_column(var = "ID")
+extract_elo(res, extractdate = "2010-01-28", IDs = c("b","d","g")) 
 ```
+<br/>  
 
 日付を指定しなければ最終日のElo-ratingが求められる。
 ```{r}
-extract_elo(res) %>% 
-  data.frame() %>% 
-  rename("Elo-rating" = ".") %>% 
-  rownames_to_column(var = "ID")
+extract_elo(res)
 ```
+<br/>  
 
-Elo-ratingの時系列的変化は以下のように描画できる。  
-```{r}
-eloplot(res)
-```
-
-
-## 4.4 おまけ(その他)  
-`EloRaing`パッケージでは、様々な論文で用いられている勝敗マトリクスのデータも豊富に取り込める。  
-
-de Vries et al. (2006)のボノボのデータ。  
-```{r}
-data(bonobos)
-bonobos
-```
-
-nDSとsteepnessの算出。  
-```{r}
-DS(bonobos,prop = "Dij")
-
-steepness(bonobos,Dij=TRUE, nrand = 10000)
-```
-
-de Vries (1998)のデータ。  
-```{r}
-data(devries98)
-devries98
-```
-
-$h'$とtransitivityの算出。  
-```{r}
-h.index(devries98, loop = 10000)
-transitivity(devries98, runs = 10000)
+Elo-ratingの時系列的変化は`eloplot`関数で以下のように描画できる。`from =`と`to =`で日付の範囲を、`ids =`で描画したい個体名を指定する。    
+```{r, fig.height = 4}
+eloplot(res, from = "2010-01-01", to = "2010-01-30", ids = "all")  
 ```

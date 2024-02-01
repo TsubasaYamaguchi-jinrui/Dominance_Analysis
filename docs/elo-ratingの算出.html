@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Dominance Analysis Using R</title>
-  <meta name="description" content="Page not found | Dominance Analysis Using R" />
+  <title>4. Elo-ratingの算出 | Dominance Analysis Using R</title>
+  <meta name="description" content="4. Elo-ratingの算出 | Dominance Analysis Using R" />
   <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Dominance Analysis Using R" />
+  <meta property="og:title" content="4. Elo-ratingの算出 | Dominance Analysis Using R" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Dominance Analysis Using R" />
+  <meta name="twitter:title" content="4. Elo-ratingの算出 | Dominance Analysis Using R" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="linearityを表す指標の算出.html"/>
+<link rel="next" href="動作環境.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -212,19 +212,88 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="elo-ratingの算出" class="section level1 hasAnchor">
+<h1>4. Elo-ratingの算出<a href="elo-ratingの算出.html#elo-ratingの算出" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="elo-ratingとは" class="section level2 hasAnchor">
+<h2>4.1 Elo-ratingとは<a href="elo-ratingの算出.html#elo-ratingとは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Elo-rating</strong>とは、各個体の相対的な強さを表す指標であり、そのときどきの勝敗によって常に変動する。主にサッカーやチェス、将棋などの競技で用いられている。時系列的に指標の変化を調べることができ、交渉結果によって指標が随時更新されていくという点で他の順位関連指標(e.g., David’s score)とは異なる<span class="citation">(cf. <a href="#ref-Albers2001">Albers and Vries 2001</a>)</span>。</p>
+<p><strong>Elo-rating</strong>では、交渉のたびに交渉前のレーティングから予想される勝利確率と実際の交渉結果を比較し、これらがどの程度違うかによってレーティングを更新していく。具体的には、個体<span class="math inline">\(A\)</span>と<span class="math inline">\(B\)</span>のレーティングを<span class="math inline">\(R_A, R_B\)</span>、個体<span class="math inline">\(A\)</span>が<span class="math inline">\(B\)</span>に勝つ確率を<span class="math inline">\(p_{AB}\)</span>とするとき、交渉後のレーティング(<span class="math inline">\(R_{Anew}, R_{Bnew}\)</span>)は以下のように変化する<span class="citation">(<a href="#ref-Neumann2011">Neumann et al. 2011</a>)</span>。なお、<span class="math inline">\(k\)</span>は定数で自由に設定できる。<span class="math inline">\(k\)</span>が大きいほど1回の交渉がレーティングに与える影響が大きくなる。</p>
+<p><strong>Aが勝った場合</strong><br />
+<span class="math display">\[
+R_{Anew} = R_A + (1-p_{AB})\times k\\
+R_{Bnew} = R_B - (1-p_{AB})\times k
+\]</span></p>
+<p><strong>Bが勝った場合</strong><br />
+<span class="math display">\[
+R_{Anew} = R_A - p_{AB}\times k\\
+R_{Bnew} = R_B + p_{AB}\times k
+\]</span>
+<br/></p>
+<p>なお、交渉前の勝利確率<span class="math inline">\(p_{AB}\)</span>は以下の式で計算される(Wikipediaより)。<br />
+<span class="math display">\[
+p_{AB} = \frac{1}{10^{(R_B - R_A)/400} + 1}
+\]</span></p>
+</div>
+<div id="rを用いた算出と可視化" class="section level2 hasAnchor">
+<h2>4.2 Rを用いた算出と可視化<a href="elo-ratingの算出.html#rを用いた算出と可視化" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>EloRating</code>パッケージを用いたElo-ratingの詳しい算出方法については、<a href="https://cran.r-project.org/web/packages/EloRating/vignettes/EloRating_tutorial.pdf">こちら</a>を参照。</p>
+<p><code>EloRating</code>パッケージでは、以下のような日付と勝敗が示されたデータを用いてElo-ratingを算出する。</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="elo-ratingの算出.html#cb25-1" tabindex="-1"></a><span class="fu">data</span>(adv)</span>
+<span id="cb25-2"><a href="elo-ratingの算出.html#cb25-2" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="elo-ratingの算出.html#cb25-3" tabindex="-1"></a>adv</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Date"],"name":[1],"type":["date"],"align":["right"]},{"label":["Time"],"name":[2],"type":["chr"],"align":["left"]},{"label":["winner"],"name":[3],"type":["fct"],"align":["left"]},{"label":["loser"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"2010-01-01","2":"15:38:13","3":"b","4":"c"},{"1":"2010-01-02","2":"16:07:30","3":"c","4":"g"},{"1":"2010-01-03","2":"10:26:45","3":"c","4":"d"},{"1":"2010-01-04","2":"15:44:58","3":"c","4":"d"},{"1":"2010-01-05","2":"14:26:55","3":"b","4":"e"},{"1":"2010-01-06","2":"17:31:02","3":"d","4":"f"},{"1":"2010-01-07","2":"14:26:55","3":"d","4":"e"},{"1":"2010-01-08","2":"15:05:16","3":"g","4":"f"},{"1":"2010-01-09","2":"10:26:55","3":"e","4":"a"},{"1":"2010-01-10","2":"16:18:31","3":"c","4":"g"},{"1":"2010-01-11","2":"8:36:47","3":"c","4":"b"},{"1":"2010-01-12","2":"16:47:57","3":"g","4":"f"},{"1":"2010-01-13","2":"16:11:15","3":"a","4":"f"},{"1":"2010-01-14","2":"12:22:17","3":"b","4":"f"},{"1":"2010-01-15","2":"11:49:24","3":"f","4":"g"},{"1":"2010-01-16","2":"16:44:17","3":"d","4":"a"},{"1":"2010-01-17","2":"15:29:03","3":"f","4":"e"},{"1":"2010-01-18","2":"12:22:10","3":"c","4":"e"},{"1":"2010-01-19","2":"8:33:25","3":"b","4":"a"},{"1":"2010-01-20","2":"12:24:19","3":"d","4":"a"},{"1":"2010-01-21","2":"13:39:18","3":"f","4":"e"},{"1":"2010-01-22","2":"12:30:59","3":"e","4":"a"},{"1":"2010-01-23","2":"9:13:22","3":"f","4":"a"},{"1":"2010-01-24","2":"11:35:35","3":"c","4":"g"},{"1":"2010-01-25","2":"15:23:17","3":"b","4":"a"},{"1":"2010-01-26","2":"14:32:31","3":"b","4":"e"},{"1":"2010-01-27","2":"14:07:21","3":"g","4":"a"},{"1":"2010-01-28","2":"13:35:59","3":"e","4":"g"},{"1":"2010-01-29","2":"13:58:16","3":"g","4":"a"},{"1":"2010-01-30","2":"7:52:27","3":"b","4":"a"},{"1":"2010-01-31","2":"13:15:58","3":"e","4":"g"},{"1":"2010-02-01","2":"8:35:23","3":"b","4":"c"},{"1":"2010-02-02","2":"6:11:36","3":"d","4":"g"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br/></p>
+<p>Elo-ratingは<code>elo.seq</code>関数を用いて算出できる。<code>winner =</code>に勝者の列の値を、<code>loser =</code>に敗者の列の値を、<code>Date</code>で日付を、<code>k =</code>で<span class="math inline">\(k\)</span>を指定する。その他の引数については、<code>?elo.seq</code>を参照。</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="elo-ratingの算出.html#cb26-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv<span class="sc">$</span>winner, <span class="at">loser =</span> adv<span class="sc">$</span>loser, <span class="at">Date =</span> adv<span class="sc">$</span>Date,</span>
+<span id="cb26-2"><a href="elo-ratingの算出.html#cb26-2" tabindex="-1"></a>               <span class="at">k =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><br/></p>
+<p><code>summary</code>関数で日付の範囲や交渉の数などの基本情報を確認できる。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="elo-ratingの算出.html#cb27-1" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
+<pre><code>## Elo ratings from 7 individuals
+## total (mean/median) number of interactions: 33 (9.4/9)
+## range of interactions: 7 - 11 
+## date range: 2010-01-01 - 2010-02-02 
+## startvalue: 1000 
+## uppon arrival treatment: average 
+## k: 100 
+## proportion of draws in the data set: 0</code></pre>
+<p><br/></p>
+<p>ある日付におけるElo-ratingは<code>extract_elo</code>関数で以下のように求められる。<code>extractdate =</code>で日付を、<code>ids =</code>で値を求めたい個体名を指定する(指定しなければ全個体について出力する)。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="elo-ratingの算出.html#cb29-1" tabindex="-1"></a><span class="fu">extract_elo</span>(res, <span class="at">extractdate =</span> <span class="st">&quot;2010-01-28&quot;</span>, <span class="at">IDs =</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;d&quot;</span>,<span class="st">&quot;g&quot;</span>)) </span></code></pre></div>
+<pre><code>##    b    d    g 
+## 1137 1095  878</code></pre>
+<p><br/></p>
+<p>日付を指定しなければ最終日のElo-ratingが求められる。</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="elo-ratingの算出.html#cb31-1" tabindex="-1"></a><span class="fu">extract_elo</span>(res)</span></code></pre></div>
+<pre><code>##    b    c    d    f    e    g    a 
+## 1203 1148 1116 1004  982  843  704</code></pre>
+<p><br/></p>
+<p>Elo-ratingの時系列的変化は<code>eloplot</code>関数で以下のように描画できる。<code>from =</code>と<code>to =</code>で日付の範囲を、<code>ids =</code>で描画したい個体名を指定する。</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="elo-ratingの算出.html#cb33-1" tabindex="-1"></a><span class="fu">eloplot</span>(res, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="st">&quot;2010-01-30&quot;</span>, <span class="at">ids =</span> <span class="st">&quot;all&quot;</span>)  </span></code></pre></div>
+<p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Albers2001" class="csl-entry">
+Albers, Vries (2001) Elo-rating as a tool in the sequential estimation of dominance strengths. Anim Behav
+</div>
+<div id="ref-Neumann2011" class="csl-entry">
+Neumann C, Duboscq J, Dubuc C, et al (2011) Assessing dominance hierarchies: Validation and advantages of progressive evaluation with elo-rating. Anim Behav 82:911–921
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="linearityを表す指標の算出.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="動作環境.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

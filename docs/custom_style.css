@@ -1,25 +1,29 @@
 h1 {
-  font-size: 21px;
-  font-family: "Meiryo";
-  margin-bottom: -25px;
+    font-size: 21px;
+    font-family: "Meiryo";
+    margin-bottom: -25px;
+    padding-bottom: 5px;
 }
 
 h2 {
-  font-size: 19px;
-  font-family: "Meiryo";
-  margin-bottom: -25px;
+    font-size: 19px;
+    font-family: "Meiryo";
+    margin-bottom: -25px;
+    padding-bottom: 5px;
 }
 
 h3 {
-  font-size: 18px;
-  font-family: "Meiryo";
-  margin-top: -20px; 
+    font-size: 18px;
+    font-family: "Meiryo";
+    margin-top: -20px;
+    padding-bottom: 5px;
 }
 
 h4 {
-  font-size: 18px;
-  font-family: "Meiryo";
-  margin-top: -25px; 
+    font-size: 18px;
+    font-family: "Meiryo";
+    margin-top: -25px;
+    padding-bottom: 5px;
 }
 
 p {

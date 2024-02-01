@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2. Steepnessの算出 | Dominance Analysis Using R</title>
   <meta name="description" content="2. Steepnessの算出 | Dominance Analysis Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2. Steepnessの算出 | Dominance Analysis Using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Tsubasa Yamaguchi" />
 
 
-<meta name="date" content="2023-01-11" />
+<meta name="date" content="2024-02-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="davids-scoreの算出.html"/>
-<link rel="next" href="linearityの算出.html"/>
+<link rel="next" href="linearityを表す指標の算出.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,6 +49,8 @@
 
 
 
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -120,6 +122,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -162,24 +168,31 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#davids-scoreとは"><i class="fa fa-check"></i>1.1 David’s Scoreとは</a></li>
 <li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#dsの定義"><i class="fa fa-check"></i>1.2 DSの定義</a></li>
 <li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#normalized-davids-scoreの定義"><i class="fa fa-check"></i>1.3 Normalized David’s Scoreの定義　　</a></li>
-<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#rでのnormalized-davids-scoreの算出方法"><i class="fa fa-check"></i>1.4 RでのNormalized David’s Scoreの算出方法</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#rでの算出方法"><i class="fa fa-check"></i>1.4 Rでの算出方法</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html"><i class="fa fa-check"></i>2. Steepnessの算出</a>
 <ul>
 <li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#steepnessとは"><i class="fa fa-check"></i>2.1 Steepnessとは</a></li>
-<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#steepnessパッケージを用いた算出"><i class="fa fa-check"></i>2.2 steepnessパッケージを用いた算出</a></li>
+<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#rでの算出方法-1"><i class="fa fa-check"></i>2.2 Rでの算出方法</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html"><i class="fa fa-check"></i>3. Linearityの算出</a>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html"><i class="fa fa-check"></i>3. Linearityを表す指標の算出</a>
 <ul>
-<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html#linearityとは"><i class="fa fa-check"></i>3.1 Linearityとは</a></li>
-<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html#rを用いたlinearityの算出"><i class="fa fa-check"></i>3.2 Rを用いたlinearityの算出</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#linearityとは"><i class="fa fa-check"></i>3.1 Linearityとは</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#ランダウのhとh"><i class="fa fa-check"></i>3.2 ランダウのhとh’</a>
+<ul>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#指標の概要"><i class="fa fa-check"></i>3.2.1 指標の概要</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#rでの算出方法と検定"><i class="fa fa-check"></i>3.2.2 Rでの算出方法と検定</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html"><i class="fa fa-check"></i>4. Elorating packageを用いた方法</a>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#triangle-transitivity"><i class="fa fa-check"></i>3.3 triangle transitivity</a>
 <ul>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#davids-scoreとsteepness"><i class="fa fa-check"></i>4.1 David’s Scoreとsteepness</a></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#linearity"><i class="fa fa-check"></i>4.2 linearity</a></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけelo-ratingの計算"><i class="fa fa-check"></i>4.3 おまけ(Elo-ratingの計算)</a></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけその他"><i class="fa fa-check"></i>4.4 おまけ(その他)</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#指標の概要-1"><i class="fa fa-check"></i>3.3.1 指標の概要</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#rでの算出方法と検定-1"><i class="fa fa-check"></i>3.3.2 Rでの算出方法と検定</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html"><i class="fa fa-check"></i>4. Elo-ratingの算出</a>
+<ul>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingとは"><i class="fa fa-check"></i>4.1 Elo-ratingとは</a></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#rを用いた算出と可視化"><i class="fa fa-check"></i>4.2 Rを用いた算出と可視化</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="動作環境.html"><a href="動作環境.html"><i class="fa fa-check"></i>動作環境</a></li>
 </ul>
@@ -204,112 +217,36 @@ div.csl-indent {
 <div id="steepnessとは" class="section level2 hasAnchor">
 <h2>2.1 Steepnessとは<a href="steepnessの算出.html#steepnessとは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>続いて、順位序列のsteepnessを算出する。<br />
-steepnessは<strong>順位序列の厳しさ</strong>を表し、例えば専制的な種ほどその値は高くなるとされる<span class="citation">(<a href="#ref-Bala2012" role="doc-biblioref">Balasubramaniam et al. 2012</a>)</span>。X軸に順位が高い個体から名前を並べ、Y軸にnDSをプロットするとき、その<strong>回帰直線の傾き</strong>がsteepnessとなる。0から1の値を取り、1に近づくほどsteepnessが高いことを示す。</p>
+steepnessは<strong>順位序列の厳しさ</strong>を表し、例えば専制的な種ほどその値は高くなるとされる<span class="citation">(<a href="#ref-Bala2012">Balasubramaniam et al. 2012</a>)</span>。X軸に順位が高い個体から名前を並べ、Y軸にnDSをプロットするとき、その<strong>回帰直線の傾きの絶対値</strong>がsteepnessとなる。0から1の値を取り、1に近づくほどsteepnessが高いことを示す。</p>
 <p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 <p>単回帰分析を行ってやれば、steepness(=傾き)は算出できる。
 今回の例では、傾きは約0.7421となることがわかる。</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="steepnessの算出.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## NDSが高い順に並べ替え  </span></span>
-<span id="cb9-2"><a href="steepnessの算出.html#cb9-2" aria-hidden="true" tabindex="-1"></a>nDS_d <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="steepnessの算出.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="steepnessの算出.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>NormDS) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-5"><a href="steepnessの算出.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="ot">-&gt;</span> nDS_d2</span>
-<span id="cb9-6"><a href="steepnessの算出.html#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="steepnessの算出.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 単回帰分析  </span></span>
-<span id="cb9-8"><a href="steepnessの算出.html#cb9-8" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>nDS_d2, NormDS<span class="sc">~</span>x)</span>
-<span id="cb9-9"><a href="steepnessの算出.html#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="steepnessの算出.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 傾き  </span></span>
-<span id="cb9-11"><a href="steepnessの算出.html#cb9-11" aria-hidden="true" tabindex="-1"></a>r<span class="sc">$</span>coefficients[[<span class="dv">2</span>]]</span></code></pre></div>
-<pre><code>## [1] -0.7420538</code></pre>
-</div>
-<div id="steepnessパッケージを用いた算出" class="section level2 hasAnchor">
-<h2>2.2 steepnessパッケージを用いた算出<a href="steepnessの算出.html#steepnessパッケージを用いた算出" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><code>steepness</code>パッケージでは、わざわざ単回帰を行わなくてもsteepnessを算出することができる。</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="steepnessの算出.html#cb11-1" aria-hidden="true" tabindex="-1"></a>stp <span class="ot">&lt;-</span> steepness<span class="sc">::</span><span class="fu">steeptest</span>(mat, <span class="at">names =</span> individuals, </span>
-<span id="cb11-2"><a href="steepnessの算出.html#cb11-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">rep =</span> <span class="dv">1000</span>, <span class="at">method =</span> <span class="st">&quot;Dij&quot;</span>,</span>
-<span id="cb11-3"><a href="steepnessの算出.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-4"><a href="steepnessの算出.html#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="steepnessの算出.html#cb11-5" aria-hidden="true" tabindex="-1"></a>stp<span class="sc">$</span>Stp</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="steepnessの算出.html#cb7-1" tabindex="-1"></a><span class="do">## 単回帰分析  </span></span>
+<span id="cb7-2"><a href="steepnessの算出.html#cb7-2" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span> nDS_d2, normDS<span class="sc">~</span>x)</span>
+<span id="cb7-3"><a href="steepnessの算出.html#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="steepnessの算出.html#cb7-4" tabindex="-1"></a><span class="do">## 傾きの絶対値    </span></span>
+<span id="cb7-5"><a href="steepnessの算出.html#cb7-5" tabindex="-1"></a><span class="fu">abs</span>(r<span class="sc">$</span>coefficients[[<span class="dv">2</span>]])</span></code></pre></div>
 <pre><code>## [1] 0.7420538</code></pre>
-<p>個体の勝敗がランダムに決まるときに比べて、steepnessが有意に高いかを検定することもできる。<br />
-結果、steepnessはランダムな場合よりも有意に高いことが分かる。</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="steepnessの算出.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stp)</span></code></pre></div>
-<pre><code>##      
-## RESULTS OF STEEPNESS ANALYSIS OF THE MATRIX OF DYADIC DOMINANCES CORRECTED FOR CHANCE 
-## ===================================================================================== 
-##      
-##      
-## Dij 
-## === 
-##      
-##           V      VS      FJ        B      PR     MU     VB    TOR     ZV
-## V   0.00000 0.87313 0.93519 0.917910 0.87838 0.8929 0.9219 0.9875 0.8793
-## VS  0.12687 0.00000 0.86538 0.725806 0.55882 0.8871 0.9762 0.8077 0.9700
-## FJ  0.06481 0.13462 0.00000 0.672414 0.75641 0.9615 0.7500 0.9286 0.7083
-## B   0.08209 0.27419 0.32759 0.000000 0.95714 0.9872 0.9595 0.9559 0.9914
-## PR  0.12162 0.44118 0.24359 0.042857 0.00000 0.8143 0.8548 0.7500 0.9792
-## MU  0.10714 0.11290 0.03846 0.012821 0.18571 0.0000 0.6250 0.4333 0.7353
-## VB  0.07812 0.02381 0.25000 0.040541 0.14516 0.3750 0.0000 0.6111 0.7000
-## TOR 0.01250 0.19231 0.07143 0.044118 0.25000 0.5667 0.3889 0.0000 0.8077
-## ZV  0.12069 0.03000 0.29167 0.008621 0.02083 0.2647 0.3000 0.1923 0.0000
-##      
-##      
-## DAVID&#39;S SCORES 
-## ============== 
-##      
-##     DS Values
-## V      29.575
-## VS     17.261
-## FJ     13.814
-## B       8.790
-## PR      2.228
-## MU    -14.998
-## VB    -15.744
-## TOR   -15.986
-## ZV    -24.941
-##      
-##      
-## NORMALIZED DAVID&#39;S SCORES 
-## ========================= 
-##      
-##     NormDS Values
-## V           7.286
-## VS          5.918
-## FJ          5.535
-## B           4.977
-## PR          4.248
-## MU          2.334
-## VB          2.251
-## TOR         2.224
-## ZV          1.229
-##      
-##      
-## STEEPNESS 
-## ========= 
-##      
-## Slope (absolute) =  0.7421 
-##      
-##      
-## INTERCEPT 
-## ========= 
-##      
-## Intercept =  7.71 
-##      
-##      
-##      
-## SUMMARY STATISTICS OF THE RANDOMIZATION PROCEDURE FOR TESTING STEEPNESS BASED ON THE Dij MEASURES 
-## ================================================================================================= 
-##                      Stp
-## Empirical value    0.742
-## Right p-value      0.001
-## Left p-value       1.000
-## N simulations   1000.000
-## Mean               0.295
-## Variance           0.005
-## Minimum            0.084
-## 25th Pctl          0.245
-## 50th Pctl          0.293
-## 75th Pctl          0.341
-## Maximum            0.503</code></pre>
+</div>
+<div id="rでの算出方法-1" class="section level2 hasAnchor">
+<h2>2.2 Rでの算出方法<a href="steepnessの算出.html#rでの算出方法-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>EloRating</code>パッケージの<code>steepness</code>関数を用いることで、回帰分析をしなくてもsteepnessを算出することができる。<code>Dij = TRUE</code>をすると<span class="math inline">\(D_{ij}\)</span>を用いたnDSを、<code>Dij = FALSE</code>をすると<span class="math inline">\(P_{ij}\)</span>を用いたnDSを用いてsteepnessを算出する。</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="steepnessの算出.html#cb9-1" tabindex="-1"></a>stp <span class="ot">&lt;-</span> EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">Dij =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-2"><a href="steepnessの算出.html#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="steepnessの算出.html#cb9-3" tabindex="-1"></a>stp</span></code></pre></div>
+<pre><code>##     steep  expected         p     nrand 
+## 0.7420538        NA        NA 0.0000000</code></pre>
+<p><br/></p>
+<p>個体の勝敗がランダムに決まるときに比べて、steepnessが有意に高いかを検定することもできる<span class="citation">(<a href="#ref-deVries2006">De Vries et al. 2006</a>)</span>。検定をする場合、ランダム化を行う回数を<code>nrand =</code>で指定する。今回の場合、<span class="math inline">\(p &lt; 0.001\)</span>となり、有意であることが分かった。</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="steepnessの算出.html#cb11-1" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">Dij =</span> <span class="cn">TRUE</span>, <span class="at">nrand =</span> <span class="dv">10000</span>)</span></code></pre></div>
+<pre><code>##        steep     expected            p        nrand 
+## 7.420538e-01 3.012287e-01 1.000000e-04 1.000000e+04</code></pre>
+<p><br/></p>
+<p><code>returnfig = TRUE</code>とすると、ランダムに勝敗が決まる場合のsteepnessの分布(<code>extected</code>)と実際のsteepnessの値(<code>expected</code>)をプロットできる。</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="steepnessの算出.html#cb13-1" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">Dij =</span> <span class="cn">TRUE</span>, <span class="at">nrand =</span> <span class="dv">10000</span>, <span class="at">returnfig =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+<pre><code>##        steep     expected            p        nrand 
+## 7.420538e-01 3.020680e-01 1.000000e-04 1.000000e+04</code></pre>
 
 </div>
 </div>
@@ -318,6 +255,9 @@ steepnessは<strong>順位序列の厳しさ</strong>を表し、例えば専制
 <div id="ref-Bala2012" class="csl-entry">
 Balasubramaniam KN, Dittmar K, Berman CM, et al (2012) Hierarchical steepness and phylogenetic models: Phylogenetic signals in macaca. Anim Behav 83:1207–1218
 </div>
+<div id="ref-deVries2006" class="csl-entry">
+De Vries H, Stevens JMG, Vervaecke H (2006) Measuring and testing the steepness of dominance hierarchies. Anim Behav 71:585–592
+</div>
 </div>
             </section>
 
@@ -325,7 +265,7 @@ Balasubramaniam KN, Dittmar K, Berman CM, et al (2012) Hierarchical steepness an
         </div>
       </div>
 <a href="davids-scoreの算出.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linearityの算出.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linearityを表す指標の算出.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

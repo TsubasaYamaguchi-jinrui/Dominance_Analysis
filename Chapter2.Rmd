@@ -1,17 +1,16 @@
-
 # 2. Steepnessの算出  
 ## 2.1 Steepnessとは
 続いて、順位序列のsteepnessを算出する。  
-steepnessは**順位序列の厳しさ**を表し、例えば専制的な種ほどその値は高くなるとされる[@Bala2012]。X軸に順位が高い個体から名前を並べ、Y軸にnDSをプロットするとき、その**回帰直線の傾き**がsteepnessとなる。0から1の値を取り、1に近づくほどsteepnessが高いことを示す。  
+steepnessは**順位序列の厳しさ**を表し、例えば専制的な種ほどその値は高くなるとされる[@Bala2012]。X軸に順位が高い個体から名前を並べ、Y軸にnDSをプロットするとき、その**回帰直線の傾きの絶対値**がsteepnessとなる。0から1の値を取り、1に近づくほどsteepnessが高いことを示す。  
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.height = 4.5}
+## nDSが高い順に並び替え、絶対的な順位(1~n)をつける  
 nDS_d %>% 
-  data.frame() %>%
-  arrange(-NormDS) %>% 
+  arrange(-normDS) %>% 
   mutate(x = 1:n()) -> nDS_d2
 
 nDS_d2 %>% 
-  ggplot(aes(x=x, y=NormDS))+
+  ggplot(aes(x=x, y=normDS))+
   geom_point(size = 3,
              shape = 15,
              color = "blue")+
@@ -32,32 +31,32 @@ nDS_d2 %>%
 単回帰分析を行ってやれば、steepness(=傾き)は算出できる。 
 今回の例では、傾きは約0.7421となることがわかる。  
 ```{r}
-## NDSが高い順に並べ替え  
-nDS_d %>% 
-  data.frame() %>%
-  arrange(-NormDS) %>% 
-  mutate(x = 1:n()) -> nDS_d2
-
 ## 単回帰分析  
-r <- lm(data=nDS_d2, NormDS~x)
+r <- lm(data= nDS_d2, normDS~x)
 
-## 傾き  
-r$coefficients[[2]]
+## 傾きの絶対値    
+abs(r$coefficients[[2]])
 ```
 
-## 2.2 steepnessパッケージを用いた算出  
-`steepness`パッケージでは、わざわざ単回帰を行わなくてもsteepnessを算出することができる。    
-```{r}
-stp <- steepness::steeptest(mat, names = individuals, 
-                 rep = 1000, method = "Dij",
-                 order = TRUE)
+## 2.2 Rでの算出方法    
+`EloRating`パッケージの`steepness`関数を用いることで、回帰分析をしなくてもsteepnessを算出することができる。`Dij = TRUE`をすると$D_{ij}$を用いたnDSを、`Dij = FALSE`をすると$P_{ij}$を用いたnDSを用いてsteepnessを算出する。  
 
-stp$Stp
+```{r}
+stp <- EloRating::steepness(mat, Dij = TRUE)
+
+stp
 ```
+<br/>  
 
-個体の勝敗がランダムに決まるときに比べて、steepnessが有意に高いかを検定することもできる。  
-結果、steepnessはランダムな場合よりも有意に高いことが分かる。  
+個体の勝敗がランダムに決まるときに比べて、steepnessが有意に高いかを検定することもできる[@deVries2006]。検定をする場合、ランダム化を行う回数を`nrand =`で指定する。今回の場合、$p < 0.001$となり、有意であることが分かった。  
+
 ```{r}
-summary(stp)
+EloRating::steepness(mat, Dij = TRUE, nrand = 10000)
+```
+<br/>  
+
+`returnfig = TRUE`とすると、ランダムに勝敗が決まる場合のsteepnessの分布(`extected`)と実際のsteepnessの値(`expected`)をプロットできる。  
+```{r, fig.height = 4}
+EloRating::steepness(mat, Dij = TRUE, nrand = 10000, returnfig = TRUE)
 ```
 

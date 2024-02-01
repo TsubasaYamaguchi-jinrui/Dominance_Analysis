@@ -7,6 +7,7 @@ output:
     split_bib: yes  
     number_sections: false    
     css: custom_style.css   
+    df_print: paged 
 site: bookdown::bookdown_site   
 documentclass: book  
 header-includes:
@@ -23,12 +24,12 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
 ```
 
 # 本稿の目的  
-本稿では、順位に関する様々な指標をRを用いて算出するデモを行う。  
+本稿は、順位に関する様々な指標の概要とRでの算出方法をまとめたものである。  
 主に扱う内容は以下のとおりである。  
 
 - David's Scoreの算出  
 - steepnessの算出  
-- linearity(h')の算出  
+- linearity($h'$と$t_{tri}$)の算出  
 - Elo-rating scoreの算出  
 
 なお、本稿の作成に使用したファイルやRのコードは筆者の[Github](https://github.com/TsubasaYamaguchi-jinrui/Dominance_Analysis)で全て閲覧できる。  

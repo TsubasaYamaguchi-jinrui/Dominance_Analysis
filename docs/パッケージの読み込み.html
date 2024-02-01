@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>0. パッケージの読み込み | Dominance Analysis Using R</title>
   <meta name="description" content="0. パッケージの読み込み | Dominance Analysis Using R" />
-  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="0. パッケージの読み込み | Dominance Analysis Using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Tsubasa Yamaguchi" />
 
 
-<meta name="date" content="2023-01-11" />
+<meta name="date" content="2024-02-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,6 +49,8 @@
 
 
 
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -120,6 +122,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
@@ -162,24 +168,31 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#davids-scoreとは"><i class="fa fa-check"></i>1.1 David’s Scoreとは</a></li>
 <li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#dsの定義"><i class="fa fa-check"></i>1.2 DSの定義</a></li>
 <li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#normalized-davids-scoreの定義"><i class="fa fa-check"></i>1.3 Normalized David’s Scoreの定義　　</a></li>
-<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#rでのnormalized-davids-scoreの算出方法"><i class="fa fa-check"></i>1.4 RでのNormalized David’s Scoreの算出方法</a></li>
+<li class="chapter" data-level="" data-path="davids-scoreの算出.html"><a href="davids-scoreの算出.html#rでの算出方法"><i class="fa fa-check"></i>1.4 Rでの算出方法</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html"><i class="fa fa-check"></i>2. Steepnessの算出</a>
 <ul>
 <li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#steepnessとは"><i class="fa fa-check"></i>2.1 Steepnessとは</a></li>
-<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#steepnessパッケージを用いた算出"><i class="fa fa-check"></i>2.2 steepnessパッケージを用いた算出</a></li>
+<li class="chapter" data-level="" data-path="steepnessの算出.html"><a href="steepnessの算出.html#rでの算出方法-1"><i class="fa fa-check"></i>2.2 Rでの算出方法</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html"><i class="fa fa-check"></i>3. Linearityの算出</a>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html"><i class="fa fa-check"></i>3. Linearityを表す指標の算出</a>
 <ul>
-<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html#linearityとは"><i class="fa fa-check"></i>3.1 Linearityとは</a></li>
-<li class="chapter" data-level="" data-path="linearityの算出.html"><a href="linearityの算出.html#rを用いたlinearityの算出"><i class="fa fa-check"></i>3.2 Rを用いたlinearityの算出</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#linearityとは"><i class="fa fa-check"></i>3.1 Linearityとは</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#ランダウのhとh"><i class="fa fa-check"></i>3.2 ランダウのhとh’</a>
+<ul>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#指標の概要"><i class="fa fa-check"></i>3.2.1 指標の概要</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#rでの算出方法と検定"><i class="fa fa-check"></i>3.2.2 Rでの算出方法と検定</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html"><i class="fa fa-check"></i>4. Elorating packageを用いた方法</a>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#triangle-transitivity"><i class="fa fa-check"></i>3.3 triangle transitivity</a>
 <ul>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#davids-scoreとsteepness"><i class="fa fa-check"></i>4.1 David’s Scoreとsteepness</a></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#linearity"><i class="fa fa-check"></i>4.2 linearity</a></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけelo-ratingの計算"><i class="fa fa-check"></i>4.3 おまけ(Elo-ratingの計算)</a></li>
-<li class="chapter" data-level="" data-path="elorating-packageを用いた方法.html"><a href="elorating-packageを用いた方法.html#おまけその他"><i class="fa fa-check"></i>4.4 おまけ(その他)</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#指標の概要-1"><i class="fa fa-check"></i>3.3.1 指標の概要</a></li>
+<li class="chapter" data-level="" data-path="linearityを表す指標の算出.html"><a href="linearityを表す指標の算出.html#rでの算出方法と検定-1"><i class="fa fa-check"></i>3.3.2 Rでの算出方法と検定</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html"><i class="fa fa-check"></i>4. Elo-ratingの算出</a>
+<ul>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingとは"><i class="fa fa-check"></i>4.1 Elo-ratingとは</a></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#rを用いた算出と可視化"><i class="fa fa-check"></i>4.2 Rを用いた算出と可視化</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="動作環境.html"><a href="動作環境.html"><i class="fa fa-check"></i>動作環境</a></li>
 </ul>
@@ -201,23 +214,17 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="パッケージの読み込み" class="section level1 hasAnchor">
 <h1>0. パッケージの読み込み<a href="パッケージの読み込み.html#パッケージの読み込み" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><code>steepness</code>パッケージ<span class="citation">(<a href="#ref-Leiva2014" role="doc-biblioref">Leiva and De Vries 2014</a>)</span>と<code>compete</code>パッケージ<span class="citation">(<a href="#ref-Curley2016" role="doc-biblioref">Curley 2016</a>)</span>を用いる。<br />
-それぞれの関数の使い方は以下のサイトを参照。<br />
-<a href="https://rdrr.io/cran/steepness/man/steepness-package.html">steepness</a><br />
-<a href="https://rdrr.io/cran/compete/">compete</a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="パッケージの読み込み.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(steepness)</span>
-<span id="cb1-2"><a href="パッケージの読み込み.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(compete)</span>
-<span id="cb1-3"><a href="パッケージの読み込み.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-4"><a href="パッケージの読み込み.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(easystats)</span></code></pre></div>
+<p>指標の算出には、<code>Elorating</code>パッケージ<span class="citation">(<a href="#ref-Neumann2020">Neumann and Kulik 2020</a>)</span>を用いる。
+使い方については、<a href="https://cran.r-project.org/web/packages/EloRating/vignettes/EloRating_tutorial.pdf">こちら</a>や<a href="https://rdrr.io/cran/EloRating/api/">こちら</a>を参照。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="パッケージの読み込み.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(EloRating)</span>
+<span id="cb1-2"><a href="パッケージの読み込み.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="パッケージの読み込み.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(easystats)</span></code></pre></div>
 
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-Curley2016" class="csl-entry">
-Curley J (2016) <a href="https://rdrr.io/cran/compete/">Compete: Analyzing competitive interaction data: R package version 0.1</a>
-</div>
-<div id="ref-Leiva2014" class="csl-entry">
-Leiva H, De Vries H (2014) <a href="https://rdrr.io/cran/steepness/man/steepness-package.html">Testing steepness of dominance hierarchie</a>
+<div id="ref-Neumann2020" class="csl-entry">
+Neumann C, Kulik L (2020) <a href="https://CRAN.R-project.org/package=EloRating">EloRating: Animal dominance hierarchies by elo rating</a>
 </div>
 </div>
             </section>

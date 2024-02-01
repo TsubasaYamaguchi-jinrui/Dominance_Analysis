@@ -1,12 +1,9 @@
 # 0. パッケージの読み込み  
-`steepness`パッケージ[@Leiva2014]と`compete`パッケージ[@Curley2016]を用いる。  
-それぞれの関数の使い方は以下のサイトを参照。  
-[steepness](https://rdrr.io/cran/steepness/man/steepness-package.html)  
-[compete](https://rdrr.io/cran/compete/)  
+指標の算出には、`Elorating`パッケージ[@Neumann2020]を用いる。
+使い方については、[こちら](https://cran.r-project.org/web/packages/EloRating/vignettes/EloRating_tutorial.pdf)や[こちら](https://rdrr.io/cran/EloRating/api/)を参照。
 
 ```{r}
-library(steepness)
-library(compete)
+library(EloRating)
 library(tidyverse)
 library(easystats)
 ```
