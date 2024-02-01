@@ -5,5 +5,4 @@
 ```{r}
 library(EloRating)
 library(tidyverse)
-library(easystats)
 ```
