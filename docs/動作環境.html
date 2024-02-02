@@ -192,7 +192,11 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html"><i class="fa fa-check"></i>4. Elo-ratingの算出</a>
 <ul>
 <li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingとは"><i class="fa fa-check"></i>4.1 Elo-ratingとは</a></li>
-<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#rを用いた算出と可視化"><i class="fa fa-check"></i>4.2 Rを用いた算出と可視化</a></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#rを用いた算出と可視化"><i class="fa fa-check"></i>4.2 Rを用いた算出と可視化</a>
+<ul>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingの算出-1"><i class="fa fa-check"></i>4.2.1 Elo-ratingの算出</a></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingの抽出"><i class="fa fa-check"></i>4.2.2 Elo-ratingの抽出</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="動作環境.html"><a href="動作環境.html"><i class="fa fa-check"></i>動作環境</a></li>
 </ul>
@@ -214,7 +218,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="動作環境" class="section level1 hasAnchor">
 <h1>動作環境<a href="動作環境.html#動作環境" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="動作環境.html#cb34-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="動作環境.html#cb57-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.2.2 (2022-10-31 ucrt)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 22621)
@@ -230,12 +234,13 @@ div.csl-indent {
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] patchwork_1.1.2      ggdag_0.2.7          dagitty_0.3-1       
-##  [4] lubridate_1.9.2      forcats_1.0.0        stringr_1.5.1       
-##  [7] dplyr_1.1.2          purrr_1.0.2          readr_2.1.4         
-## [10] tidyr_1.3.1          tibble_3.2.1         ggplot2_3.4.4       
-## [13] tidyverse_2.0.0      EloRating_0.46.11    sna_2.7             
-## [16] network_1.18.0       statnet.common_4.7.0 zoo_1.8-11          
+##  [1] ggsci_2.9            patchwork_1.1.2      ggdag_0.2.7         
+##  [4] dagitty_0.3-1        lubridate_1.9.2      forcats_1.0.0       
+##  [7] stringr_1.5.1        dplyr_1.1.2          purrr_1.0.2         
+## [10] readr_2.1.4          tidyr_1.3.1          tibble_3.2.1        
+## [13] ggplot2_3.4.4        tidyverse_2.0.0      EloRating_0.46.11   
+## [16] sna_2.7              network_1.18.0       statnet.common_4.7.0
+## [19] zoo_1.8-11          
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] viridis_0.6.4      sass_0.4.8         viridisLite_0.4.2  tidygraph_1.2.2   
@@ -248,13 +253,13 @@ div.csl-indent {
 ## [29] mgcv_1.9-1         generics_0.1.3     farver_2.1.1       cachem_1.0.8      
 ## [33] withr_3.0.0        cli_3.6.1          magrittr_2.0.3     evaluate_0.23     
 ## [37] fansi_1.0.3        nlme_3.1-160       MASS_7.3-58.1      tools_4.2.2       
-## [41] hms_1.1.3          lifecycle_1.0.4    V8_4.2.2           munsell_0.5.0     
-## [45] compiler_4.2.2     jquerylib_0.1.4    rlang_1.1.1        grid_4.2.2        
-## [49] rstudioapi_0.15.0  igraph_1.3.5       labeling_0.4.3     rmarkdown_2.25    
-## [53] boot_1.3-28        gtable_0.3.4       curl_4.3.3         graphlayouts_1.0.0
-## [57] R6_2.5.1           gridExtra_2.3      knitr_1.45         fastmap_1.1.1     
-## [61] utf8_1.2.2         stringi_1.8.3      Rcpp_1.0.11        vctrs_0.6.3       
-## [65] tidyselect_1.2.0   xfun_0.39          coda_0.19-4</code></pre>
+## [41] hms_1.1.3          see_0.7.5.5        lifecycle_1.0.4    V8_4.2.2          
+## [45] munsell_0.5.0      compiler_4.2.2     jquerylib_0.1.4    rlang_1.1.1       
+## [49] grid_4.2.2         rstudioapi_0.15.0  igraph_1.3.5       labeling_0.4.3    
+## [53] rmarkdown_2.25     boot_1.3-28        gtable_0.3.4       curl_4.3.3        
+## [57] graphlayouts_1.0.0 R6_2.5.1           gridExtra_2.3      knitr_1.45        
+## [61] fastmap_1.1.1      utf8_1.2.2         stringi_1.8.3      Rcpp_1.0.11       
+## [65] vctrs_0.6.3        tidyselect_1.2.0   xfun_0.39          coda_0.19-4</code></pre>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
@@ -264,10 +269,25 @@ Albers, Vries (2001) Elo-rating as a tool in the sequential estimation of domina
 Balasubramaniam KN, Dittmar K, Berman CM, et al (2012) Hierarchical steepness and phylogenetic models: Phylogenetic signals in macaca. Anim Behav 83:1207–1218
 </div>
 <div class="csl-entry">
+Ballesta S, Sadoughi B, Miss F, et al (2021) Assessing the reliability of an automated method for measuring dominance hierarchy in non-human primates. Primates 62:595–607
+</div>
+<div class="csl-entry">
 De Vries H (1995) An improved test of linearity in dominance hierarchies containing unknown or tied relationships. Anim Behav 50:1375–1389
 </div>
 <div class="csl-entry">
 De Vries H, Stevens JMG, Vervaecke H (2006) Measuring and testing the steepness of dominance hierarchies. Anim Behav 71:585–592
+</div>
+<div class="csl-entry">
+Foerster S, Franz M, Murray CM, et al (2016) Chimpanzee females queue but males compete for social status. Sci Rep 6:35404
+</div>
+<div class="csl-entry">
+Franz M, McLean E, Tung J, et al (2015) Self-organizing dominance hierarchies in a wild primate population. Proc Biol Sci 282:
+</div>
+<div class="csl-entry">
+Goffe AS, Fischer J, Sennhenn-Reulen H (2018) Bayesian inference and simulation approaches improve the assessment of elo‐ratings in the analysis of social behaviour. Methods Ecol Evol 9:2131–2144
+</div>
+<div class="csl-entry">
+Jarvey JC, Low BS, Azanaw Haile A, et al (2024) Aggression rates increase around seasonally exploited resources in a primarily grass-eating primate. Behavioral Ecology 35:arad079
 </div>
 <div class="csl-entry">
 Landau HG (1951) On dominance relations and the structure of animal societies: I. Effect of inherent characteristics. The bulletin of mathematical biophysics 13:1–19
@@ -276,7 +296,13 @@ Landau HG (1951) On dominance relations and the structure of animal societies: I
 Neumann C, Duboscq J, Dubuc C, et al (2011) Assessing dominance hierarchies: Validation and advantages of progressive evaluation with elo-rating. Anim Behav 82:911–921
 </div>
 <div class="csl-entry">
+Neumann C, Fischer J (2023) Extending bayesian elo-rating to quantify the steepness of dominance hierarchies. Methods in Ecology and Evolution 14:669–682
+</div>
+<div class="csl-entry">
 Neumann C, Kulik L (2020) <a href="https://CRAN.R-project.org/package=EloRating">EloRating: Animal dominance hierarchies by elo rating</a>
+</div>
+<div class="csl-entry">
+Newton-Fisher NE (2017) Modeling social dominance: <span>Elo-Ratings</span>, prior history, and the intensity of aggression. 38:427–447
 </div>
 <div class="csl-entry">
 Shizuka D, McDonald DB (2012) A social network perspective on measurements of dominance hierarchies. Anim Behav 83:925–934
@@ -286,6 +312,13 @@ Vervaecke H, Stevens JMG, Vandemoortele H, et al (2007) Aggression and dominance
 </div>
 </div>
 </div>
+
+
+
+
+
+
+
             </section>
 
           </div>

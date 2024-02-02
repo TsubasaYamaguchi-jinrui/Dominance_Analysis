@@ -1,2 +1,7 @@
 fig:triangle
 fig:weight
+fig:p1
+fig:p2
+fig:shape
+fig:p3
+fig:p4

@@ -192,7 +192,11 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html"><i class="fa fa-check"></i>4. Elo-ratingの算出</a>
 <ul>
 <li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingとは"><i class="fa fa-check"></i>4.1 Elo-ratingとは</a></li>
-<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#rを用いた算出と可視化"><i class="fa fa-check"></i>4.2 Rを用いた算出と可視化</a></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#rを用いた算出と可視化"><i class="fa fa-check"></i>4.2 Rを用いた算出と可視化</a>
+<ul>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingの算出-1"><i class="fa fa-check"></i>4.2.1 Elo-ratingの算出</a></li>
+<li class="chapter" data-level="" data-path="elo-ratingの算出.html"><a href="elo-ratingの算出.html#elo-ratingの抽出"><i class="fa fa-check"></i>4.2.2 Elo-ratingの抽出</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="動作環境.html"><a href="動作環境.html"><i class="fa fa-check"></i>動作環境</a></li>
 </ul>
@@ -216,7 +220,7 @@ div.csl-indent {
 <h1>4. Elo-ratingの算出<a href="elo-ratingの算出.html#elo-ratingの算出" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="elo-ratingとは" class="section level2 hasAnchor">
 <h2>4.1 Elo-ratingとは<a href="elo-ratingの算出.html#elo-ratingとは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Elo-rating</strong>とは、各個体の相対的な強さを表す指標であり、そのときどきの勝敗によって常に変動する。主にサッカーやチェス、将棋などの競技で用いられている。時系列的に指標の変化を調べることができ、交渉結果によって指標が随時更新されていくという点で他の順位関連指標(e.g., David’s score)とは異なる<span class="citation">(cf. <a href="#ref-Albers2001">Albers and Vries 2001</a>)</span>。</p>
+<p><strong>Elo-rating</strong>とは、各個体の相対的な強さを表す指標であり、そのときどきの勝敗によって常に変動する。主にサッカーやチェス、将棋などの競技で用いられているが、近年霊長類学を含む動物行動学の分野でもよく使われるようになっている<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>; <a href="#ref-ballesta2021">Ballesta et al. 2021</a>; <a href="#ref-neumann2023">Neumann and Fischer 2023</a>; <a href="#ref-jarvey2024">Jarvey et al. 2024</a>)</span>。時系列的に指標の変化を調べることができ、<strong>交渉結果によって指標が随時更新されていく</strong>という点で他の順位関連指標(e.g., David’s score)とは異なる<span class="citation">(cf. <a href="#ref-Albers2001">Albers and Vries 2001</a>)</span>。</p>
 <p><strong>Elo-rating</strong>では、交渉のたびに交渉前のレーティングから予想される勝利確率と実際の交渉結果を比較し、これらがどの程度違うかによってレーティングを更新していく。具体的には、個体<span class="math inline">\(A\)</span>と<span class="math inline">\(B\)</span>のレーティングを<span class="math inline">\(R_A, R_B\)</span>、個体<span class="math inline">\(A\)</span>が<span class="math inline">\(B\)</span>に勝つ確率を<span class="math inline">\(p_{AB}\)</span>とするとき、交渉後のレーティング(<span class="math inline">\(R_{Anew}, R_{Bnew}\)</span>)は以下のように変化する<span class="citation">(<a href="#ref-Neumann2011">Neumann et al. 2011</a>)</span>。なお、<span class="math inline">\(k\)</span>は定数で自由に設定できる。<span class="math inline">\(k\)</span>が大きいほど1回の交渉がレーティングに与える影響が大きくなる。</p>
 <p><strong>Aが勝った場合</strong><br />
 <span class="math display">\[
@@ -229,14 +233,21 @@ R_{Anew} = R_A - p_{AB}\times k\\
 R_{Bnew} = R_B + p_{AB}\times k
 \]</span>
 <br/></p>
-<p>なお、交渉前の勝利確率<span class="math inline">\(p_{AB}\)</span>は以下の式で計算される(Wikipediaより)。<br />
+<p>なお、交渉前の勝利確率<span class="math inline">\(p_{AB}\)</span>は一般に以下の式で計算される(Wikipediaより)。<br />
 <span class="math display">\[
 p_{AB} = \frac{1}{10^{(R_B - R_A)/400} + 1}
+\]</span></p>
+<p>ただし、勝利確率をどのように算出するかについては、まだコンセンサスが得られておらず、様々な方法があるようだ<span class="citation">(<a href="#ref-neumann2023">Neumann and Fischer 2023</a>)</span>。霊長類の研究<span class="citation">(<a href="#ref-Franz2015">Franz et al. 2015</a>; <a href="#ref-Goffe2018">Goffe et al. 2018</a>)</span>では、交渉前に個体<span class="math inline">\(A\)</span>が<span class="math inline">\(B\)</span>に勝つ確率<span class="math inline">\(P_{AB}\)</span>を以下のように定義している。なお、 <span class="citation">Franz et al. (<a href="#ref-Franz2015">2015</a>)</span> では<span class="math inline">\(\delta = 0.01\)</span>、 <span class="citation">Goffe et al. (<a href="#ref-Goffe2018">2018</a>)</span> では<span class="math inline">\(\delta = 1\)</span>としている。</p>
+<p><span class="math display">\[
+P_{AB} = \frac{1}{1 + exp(- \delta(R_A - R_B))}
 \]</span></p>
 </div>
 <div id="rを用いた算出と可視化" class="section level2 hasAnchor">
 <h2>4.2 Rを用いた算出と可視化<a href="elo-ratingの算出.html#rを用いた算出と可視化" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><code>EloRating</code>パッケージを用いたElo-ratingの詳しい算出方法については、<a href="https://cran.r-project.org/web/packages/EloRating/vignettes/EloRating_tutorial.pdf">こちら</a>を参照。</p>
+<div id="elo-ratingの算出-1" class="section level3 hasAnchor">
+<h3>4.2.1 Elo-ratingの算出<a href="elo-ratingの算出.html#elo-ratingの算出-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="交渉の種類を考慮しない場合" class="section level4 hasAnchor">
+<h4>4.2.1.1 交渉の種類を考慮しない場合<a href="elo-ratingの算出.html#交渉の種類を考慮しない場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><code>EloRating</code>パッケージでは、以下のような日付と勝敗が示されたデータを用いてElo-ratingを算出する。</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="elo-ratingの算出.html#cb25-1" tabindex="-1"></a><span class="fu">data</span>(adv)</span>
 <span id="cb25-2"><a href="elo-ratingの算出.html#cb25-2" tabindex="-1"></a></span>
@@ -247,35 +258,237 @@ p_{AB} = \frac{1}{10^{(R_B - R_A)/400} + 1}
   </script>
 </div>
 <p><br/></p>
-<p>Elo-ratingは<code>elo.seq</code>関数を用いて算出できる。<code>winner =</code>に勝者の列の値を、<code>loser =</code>に敗者の列の値を、<code>Date</code>で日付を、<code>k =</code>で<span class="math inline">\(k\)</span>を指定する。その他の引数については、<code>?elo.seq</code>を参照。</p>
+<p>Elo-ratingは<code>elo.seq</code>関数を用いて算出できる。<code>winner =</code>に勝者の値をおさめたベクトルを、<code>loser =</code>に敗者の値をおさめたベクトルを、<code>Date</code>で日付をおさめたベクトルを、<code>k =</code>で<span class="math inline">\(k\)</span>を指定する。その他の引数については、<code>?elo.seq</code>を参照。</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="elo-ratingの算出.html#cb26-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv<span class="sc">$</span>winner, <span class="at">loser =</span> adv<span class="sc">$</span>loser, <span class="at">Date =</span> adv<span class="sc">$</span>Date,</span>
 <span id="cb26-2"><a href="elo-ratingの算出.html#cb26-2" tabindex="-1"></a>               <span class="at">k =</span> <span class="dv">100</span>)</span></code></pre></div>
 <p><br/></p>
+<p><span class="math inline">\(k\)</span>の値については、<code>optimizek</code>関数を用いて、実際の交渉データに最もよく符合するような<span class="math inline">\(k\)</span>を最尤法で推定することもできる<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。<code>krange =</code>で想定する<span class="math inline">\(k\)</span>の範囲を、<code>resolution =</code>で指定した範囲を何等分した値を用いて推定を行うかを指定する。今回の場合は、最尤推定値は<code>k = 252.6982</code>になるようだ(<code>loglik</code>はそのときの対数尤度)。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="elo-ratingの算出.html#cb27-1" tabindex="-1"></a>ml_z <span class="ot">&lt;-</span> <span class="fu">optimizek</span>(res, <span class="at">krange =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">500</span>), <span class="at">resolution =</span> <span class="dv">50000</span>)</span>
+<span id="cb27-2"><a href="elo-ratingの算出.html#cb27-2" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="elo-ratingの算出.html#cb27-3" tabindex="-1"></a>ml_z<span class="sc">$</span>best</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["k"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["loglik"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"252.6982","2":"-16.92","_rn_":"25171"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br/></p>
+<p>この値を用いてもう一度Elo-ratingを算出すると以下のようになる。</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="elo-ratingの算出.html#cb28-1" tabindex="-1"></a>res_opt <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv<span class="sc">$</span>winner, <span class="at">loser =</span> adv<span class="sc">$</span>loser, <span class="at">Date =</span> adv<span class="sc">$</span>Date,</span>
+<span id="cb28-2"><a href="elo-ratingの算出.html#cb28-2" tabindex="-1"></a>                   <span class="at">k =</span> ml_z<span class="sc">$</span>best<span class="sc">$</span>k)</span></code></pre></div>
+<p><br/></p>
 <p><code>summary</code>関数で日付の範囲や交渉の数などの基本情報を確認できる。</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="elo-ratingの算出.html#cb27-1" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="elo-ratingの算出.html#cb29-1" tabindex="-1"></a><span class="fu">summary</span>(res_opt)</span></code></pre></div>
 <pre><code>## Elo ratings from 7 individuals
 ## total (mean/median) number of interactions: 33 (9.4/9)
 ## range of interactions: 7 - 11 
 ## date range: 2010-01-01 - 2010-02-02 
 ## startvalue: 1000 
 ## uppon arrival treatment: average 
-## k: 100 
+## k: 252.698213964279 
 ## proportion of draws in the data set: 0</code></pre>
 <p><br/></p>
-<p>ある日付におけるElo-ratingは<code>extract_elo</code>関数で以下のように求められる。<code>extractdate =</code>で日付を、<code>ids =</code>で値を求めたい個体名を指定する(指定しなければ全個体について出力する)。</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="elo-ratingの算出.html#cb29-1" tabindex="-1"></a><span class="fu">extract_elo</span>(res, <span class="at">extractdate =</span> <span class="st">&quot;2010-01-28&quot;</span>, <span class="at">IDs =</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;d&quot;</span>,<span class="st">&quot;g&quot;</span>)) </span></code></pre></div>
-<pre><code>##    b    d    g 
-## 1137 1095  878</code></pre>
+<p>Elo-ratingの時系列的変化は<code>eloplot</code>関数で以下のように描画できる(図<a href="elo-ratingの算出.html#fig:p1">3</a>)。<code>from =</code>と<code>to =</code>で日付の範囲を、<code>ids =</code>で描画したい個体名を指定する。</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="elo-ratingの算出.html#cb31-1" tabindex="-1"></a><span class="fu">eloplot</span>(res_opt, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="st">&quot;2010-02-02&quot;</span>, <span class="at">ids =</span> <span class="st">&quot;all&quot;</span>)  </span></code></pre></div>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:p1"></span>
+<img src="Dominance-Analysis-Using-R_files/figure-html/p1-1.png" alt="交渉の種類を考慮しない場合のElo-rating" width="672" />
+<p class="caption">
+Figure 3: 交渉の種類を考慮しない場合のElo-rating
+</p>
+</div>
+</div>
+<div id="交渉の種類を考慮する場合" class="section level4 hasAnchor">
+<h4>4.2.1.2 交渉の種類を考慮する場合<a href="elo-ratingの算出.html#交渉の種類を考慮する場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>交渉の種類が複数あり、それぞれの激しさが異なる</strong>ようなとき(例えば、サプラント、威嚇、物理的攻撃など)、それぞれについて異なる<span class="math inline">\(k\)</span>の値を付すこともできる<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。例えば、以下の<code>adv2</code>というデータでは、<code>intensity</code>列に各交渉で見られた敵対的交渉が2種類記録されている(<code>displace</code>か<code>fight</code>)。</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="elo-ratingの算出.html#cb32-1" tabindex="-1"></a><span class="fu">data</span>(adv2)</span>
+<span id="cb32-2"><a href="elo-ratingの算出.html#cb32-2" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="elo-ratingの算出.html#cb32-3" tabindex="-1"></a>adv2</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Date"],"name":[1],"type":["date"],"align":["right"]},{"label":["Time"],"name":[2],"type":["chr"],"align":["left"]},{"label":["winner"],"name":[3],"type":["fct"],"align":["left"]},{"label":["loser"],"name":[4],"type":["fct"],"align":["left"]},{"label":["tie"],"name":[5],"type":["lgl"],"align":["right"]},{"label":["intensity"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"2010-01-01","2":"15:38:13","3":"b","4":"c","5":"FALSE","6":"displace"},{"1":"2010-01-02","2":"16:07:30","3":"c","4":"g","5":"FALSE","6":"displace"},{"1":"2010-01-03","2":"10:26:45","3":"c","4":"d","5":"FALSE","6":"displace"},{"1":"2010-01-04","2":"15:44:58","3":"c","4":"d","5":"FALSE","6":"displace"},{"1":"2010-01-05","2":"14:26:55","3":"b","4":"e","5":"FALSE","6":"displace"},{"1":"2010-01-06","2":"17:31:02","3":"d","4":"f","5":"FALSE","6":"fight"},{"1":"2010-01-07","2":"14:26:55","3":"d","4":"e","5":"TRUE","6":"displace"},{"1":"2010-01-08","2":"15:05:16","3":"g","4":"f","5":"FALSE","6":"displace"},{"1":"2010-01-09","2":"10:26:55","3":"e","4":"a","5":"FALSE","6":"displace"},{"1":"2010-01-10","2":"16:18:31","3":"c","4":"g","5":"FALSE","6":"displace"},{"1":"2010-01-11","2":"8:36:47","3":"c","4":"b","5":"FALSE","6":"displace"},{"1":"2010-01-12","2":"16:47:57","3":"g","4":"f","5":"TRUE","6":"displace"},{"1":"2010-01-13","2":"16:11:15","3":"a","4":"f","5":"TRUE","6":"displace"},{"1":"2010-01-14","2":"12:22:17","3":"b","4":"f","5":"FALSE","6":"displace"},{"1":"2010-01-15","2":"11:49:24","3":"f","4":"g","5":"FALSE","6":"fight"},{"1":"2010-01-16","2":"16:44:17","3":"d","4":"a","5":"FALSE","6":"displace"},{"1":"2010-01-17","2":"15:29:03","3":"f","4":"e","5":"FALSE","6":"fight"},{"1":"2010-01-18","2":"12:22:10","3":"c","4":"e","5":"FALSE","6":"displace"},{"1":"2010-01-19","2":"8:33:25","3":"b","4":"a","5":"FALSE","6":"displace"},{"1":"2010-01-20","2":"12:24:19","3":"d","4":"a","5":"FALSE","6":"displace"},{"1":"2010-01-21","2":"13:39:18","3":"f","4":"e","5":"FALSE","6":"fight"},{"1":"2010-01-22","2":"12:30:59","3":"e","4":"a","5":"TRUE","6":"displace"},{"1":"2010-01-23","2":"9:13:22","3":"f","4":"a","5":"FALSE","6":"displace"},{"1":"2010-01-24","2":"11:35:35","3":"c","4":"g","5":"FALSE","6":"displace"},{"1":"2010-01-25","2":"15:23:17","3":"b","4":"a","5":"TRUE","6":"fight"},{"1":"2010-01-26","2":"14:32:31","3":"b","4":"e","5":"FALSE","6":"displace"},{"1":"2010-01-27","2":"14:07:21","3":"g","4":"a","5":"TRUE","6":"fight"},{"1":"2010-01-28","2":"13:35:59","3":"e","4":"g","5":"FALSE","6":"displace"},{"1":"2010-01-29","2":"13:58:16","3":"g","4":"a","5":"FALSE","6":"displace"},{"1":"2010-01-30","2":"7:52:27","3":"b","4":"a","5":"TRUE","6":"displace"},{"1":"2010-01-31","2":"13:15:58","3":"e","4":"g","5":"FALSE","6":"fight"},{"1":"2010-02-01","2":"8:35:23","3":"b","4":"c","5":"FALSE","6":"displace"},{"1":"2010-02-02","2":"6:11:36","3":"d","4":"g","5":"FALSE","6":"displace"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br/></p>
+<p><code>displace</code>なら<span class="math inline">\(k = 50\)</span>、<code>fight</code>なら<span class="math inline">\(k = 200\)</span>の様にlist形式でそれぞれの<span class="math inline">\(k\)</span>を書いたものを、<code>elo.seq</code>関数の<code>k =</code>で指定する。また、<code>intensity =</code>に交渉の種類を示したベクトルを指定する。</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="elo-ratingの算出.html#cb33-1" tabindex="-1"></a>myk <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">displace =</span> <span class="dv">50</span>, <span class="at">fight =</span> <span class="dv">200</span>)</span>
+<span id="cb33-2"><a href="elo-ratingの算出.html#cb33-2" tabindex="-1"></a>res_int <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv2<span class="sc">$</span>winner, <span class="at">loser =</span> adv2<span class="sc">$</span>loser, <span class="at">Date =</span> adv2<span class="sc">$</span>Date,</span>
+<span id="cb33-3"><a href="elo-ratingの算出.html#cb33-3" tabindex="-1"></a>                   <span class="at">k =</span> myk, <span class="at">intensity =</span> adv2<span class="sc">$</span>intensity)</span></code></pre></div>
+<p><br/></p>
+<p>この場合も同様に、最尤法を利用して実際の交渉データに最もよく符合するような<span class="math inline">\(k\)</span>を推定できる。<code>krange =</code>でlist形式でそれぞれの種類ごとに想定する<span class="math inline">\(k\)</span>の範囲を、<code>itype =</code>でそれぞれの交渉の種類の名前のベクトルを指定する。</p>
+<p>今回の場合は、<code>displace</code>のときは<span class="math inline">\(k = 186.0861\)</span>、<code>fight</code>のときは<span class="math inline">\(k = 477.9279\)</span>と推定された。</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="elo-ratingの算出.html#cb34-1" tabindex="-1"></a>ml_z2 <span class="ot">&lt;-</span> <span class="fu">optimizek</span>(res_int, </span>
+<span id="cb34-2"><a href="elo-ratingの算出.html#cb34-2" tabindex="-1"></a>                   <span class="at">krange =</span> <span class="fu">list</span>(<span class="at">displace =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">500</span>), <span class="at">fight =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">500</span>)),</span>
+<span id="cb34-3"><a href="elo-ratingの算出.html#cb34-3" tabindex="-1"></a>                   <span class="at">resolution =</span> <span class="dv">1000</span>,</span>
+<span id="cb34-4"><a href="elo-ratingの算出.html#cb34-4" tabindex="-1"></a>                   <span class="at">itype =</span> adv2<span class="sc">$</span>intensity)</span>
+<span id="cb34-5"><a href="elo-ratingの算出.html#cb34-5" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="elo-ratingの算出.html#cb34-6" tabindex="-1"></a>ml_z2<span class="sc">$</span>best</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["displace"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["fight"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["loglik"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"186.0861","2":"477.9279","3":"-15.26618","_rn_":"954360"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br/></p>
+<p>この値を用いてもう一度Elo-ratingを算出すると以下のようになる。</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="elo-ratingの算出.html#cb35-1" tabindex="-1"></a>myk2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">displace =</span> ml_z2<span class="sc">$</span>best<span class="sc">$</span>displace, <span class="at">fight =</span> ml_z2<span class="sc">$</span>best<span class="sc">$</span>fight)</span>
+<span id="cb35-2"><a href="elo-ratingの算出.html#cb35-2" tabindex="-1"></a>res_int_opt <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner =</span> adv2<span class="sc">$</span>winner, <span class="at">loser =</span> adv2<span class="sc">$</span>loser, <span class="at">Date =</span> adv2<span class="sc">$</span>Date,</span>
+<span id="cb35-3"><a href="elo-ratingの算出.html#cb35-3" tabindex="-1"></a>                       <span class="at">k =</span> myk2, <span class="at">intensity =</span> adv2<span class="sc">$</span>intensity)</span></code></pre></div>
+<p><br/></p>
+<p><code>summary</code>関数で日付の範囲や交渉の数などの基本情報を確認できる。</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="elo-ratingの算出.html#cb36-1" tabindex="-1"></a><span class="fu">summary</span>(res_int_opt)</span></code></pre></div>
+<pre><code>## Elo ratings from 7 individuals
+## total (mean/median) number of interactions: 33 (9.4/9)
+## range of interactions: 7 - 11 
+## date range: 2010-01-01 - 2010-02-02 
+## startvalue: 1000 
+## uppon arrival treatment: average 
+## k: custom values ranging between 186.086086086086 and 477.927927927928 
+## proportion of draws in the data set: 0</code></pre>
+<p><br/></p>
+<p>Elo-ratingの時系列的変化を<code>eloplot</code>関数で描画すると以下のようになる(図<a href="elo-ratingの算出.html#fig:p2">4</a>)。</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="elo-ratingの算出.html#cb38-1" tabindex="-1"></a><span class="fu">eloplot</span>(res_int_opt, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="st">&quot;2010-02-02&quot;</span>, <span class="at">ids =</span> <span class="st">&quot;all&quot;</span>)  </span></code></pre></div>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:p2"></span>
+<img src="Dominance-Analysis-Using-R_files/figure-html/p2-1.png" alt="交渉の種類を考慮した場合のElo-rating" width="672" />
+<p class="caption">
+Figure 4: 交渉の種類を考慮した場合のElo-rating
+</p>
+</div>
+</div>
+<div id="事前の情報の考慮する場合" class="section level4 hasAnchor">
+<h4>4.2.1.3 事前の情報の考慮する場合<a href="elo-ratingの算出.html#事前の情報の考慮する場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Elo-ratingは、データ収集の開始時点では全ての個体のレーティングが等しいと仮定され、それを実際の交渉の結果によって更新していく。しかし、これは集団が新たに形成された場合は適切であるが、集団がデータ収集前から存在している場合には妥当ではない<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。また、Elo-ratingが実際の優劣関係と一致するためには、交渉数が十分に蓄積する時点までburn-in期間と呼ばれる期間が必要である<span class="citation">(<a href="#ref-Albers2001">Albers and Vries 2001</a>; <a href="#ref-Neumann2011">Neumann et al. 2011</a>)</span>。この期間のElo-ratingは信頼性が低く、分析などに使用することができない<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。</p>
+<p>これらの問題を解決するため、 <span class="citation">Newton-Fisher (<a href="#ref-Newton-Fisher2017">2017</a>)</span> は<strong>事前に個体間の優劣関係についてわかっている情報をElo-ratingの算出に用いる</strong>ことを提案している。この方法を用いれば、データ収集の開始時点から個体間のレーティングが全く同じになることはなく、またburn-in期間を短縮できる可能性がある。</p>
+<p>事前に個体間の優劣関係(e.g., 順位など)が分かっているとき、開始時点の個体<span class="math inline">\(i\)</span>のElo-ratingは以下のように定義される<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。<span class="math inline">\(S_e\)</span>は事前の情報がない場合の開始時点のレーティング(デフォルトは1000)、<span class="math inline">\(x_r\)</span>は事前情報で分かっている全個体の順位の中央値、<span class="math inline">\(S_{ri}\)</span>は事前情報による個体<span class="math inline">\(i\)</span>の順位である<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。<span class="math inline">\(k\)</span>は前節までと同じで、<span class="math inline">\(l_r\)</span>は事前情報による順位をどの程度反映させるかを決める定数で、0から1の値を指定できる。</p>
+<p><span class="math display">\[
+E_i = S_e + [(x_r - S_{ri})\times k \times S_{ri}^{-l_r}]
+\]</span></p>
+<p>例えば、事前に順位(1位, 2位, …, 10位)の情報があるとき、<span class="math inline">\(l_r\)</span>の値による開始時点のレーティングは以下のような関係になる。<br />
+<br/></p>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:shape"></span>
+<img src="Dominance-Analysis-Using-R_files/figure-html/shape-1.png" alt="lrによる開始時点のレーティング。" width="672" />
+<p class="caption">
+Figure 5: lrによる開始時点のレーティング。
+</p>
+</div>
+<p><br/></p>
+<p>それでは、Rを用いて算出してみよう。以下のように事前に順位(e.g., 1位, 2位, …)が分かっているとする。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="elo-ratingの算出.html#cb39-1" tabindex="-1"></a>myranks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)</span>
+<span id="cb39-2"><a href="elo-ratingの算出.html#cb39-2" tabindex="-1"></a><span class="fu">names</span>(myranks) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;e&quot;</span>, <span class="st">&quot;g&quot;</span>,<span class="st">&quot;a&quot;</span>)</span>
+<span id="cb39-3"><a href="elo-ratingの算出.html#cb39-3" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="elo-ratingの算出.html#cb39-4" tabindex="-1"></a>myranks</span></code></pre></div>
+<pre><code>## b c d f e g a 
+## 1 2 3 4 5 6 7</code></pre>
+<p><br/></p>
+<p>このとき、開始時点のレーティングは<code>breatestartvalues</code>関数で以下のように算出できる。<code>shape =</code>で<span class="math inline">\(\delta\)</span>を、<code>startvalue =</code>で<span class="math inline">\(S_e\)</span>を、<code>k =</code>で<span class="math inline">\(k\)</span>を指定する。</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="elo-ratingの算出.html#cb41-1" tabindex="-1"></a>mystart <span class="ot">&lt;-</span> <span class="fu">createstartvalues</span>(myranks, <span class="at">shape =</span> <span class="fl">0.3</span>, <span class="at">startvalue =</span> <span class="dv">1000</span>, <span class="at">k =</span> <span class="dv">100</span>)</span>
+<span id="cb41-2"><a href="elo-ratingの算出.html#cb41-2" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="elo-ratingの算出.html#cb41-3" tabindex="-1"></a>mystart<span class="sc">$</span>res</span></code></pre></div>
+<pre><code>##    b    c    d    f    e    g    a 
+## 1273 1136 1045  973  911  856  806</code></pre>
+<p><br/></p>
+<p>これを事前情報として用いたElo-ratingは以下のように算出する。<code>startvalue =</code>で先ほど算出したレーティングのベクトルを指定する。</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="elo-ratingの算出.html#cb43-1" tabindex="-1"></a>res_prior <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner=</span> adv2<span class="sc">$</span>winner, <span class="at">loser=</span> adv2<span class="sc">$</span>loser, </span>
+<span id="cb43-2"><a href="elo-ratingの算出.html#cb43-2" tabindex="-1"></a>                     <span class="at">Date =</span> adv2<span class="sc">$</span>Date, <span class="at">startvalue =</span> mystart<span class="sc">$</span>res)</span></code></pre></div>
+<p><br/></p>
+<p>Elo-ratingの時系列的変化を<code>eloplot</code>関数で描画すると以下のようになる(図<a href="elo-ratingの算出.html#fig:p3">6</a>)。事前情報がなかった場合(図<a href="elo-ratingの算出.html#fig:p1">3</a>と図<a href="elo-ratingの算出.html#fig:p2">4</a>)に比べてレーティングが安定するのが早く、burn-in期間が短くなっていることが分かる。</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="elo-ratingの算出.html#cb44-1" tabindex="-1"></a><span class="fu">eloplot</span>(res_prior, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="st">&quot;2010-02-02&quot;</span>, <span class="at">ids =</span> <span class="st">&quot;all&quot;</span>)  </span></code></pre></div>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:p3"></span>
+<img src="Dominance-Analysis-Using-R_files/figure-html/p3-1.png" alt="事前情報(数字の順位)を考慮した場合のElo-rating" width="672" />
+<p class="caption">
+Figure 6: 事前情報(数字の順位)を考慮した場合のElo-rating
+</p>
+</div>
+<p><br/></p>
+<p>順位が以下のようにカテゴリでしかわかっていない場合でも、事前情報を考慮して算出を行うことができる(ただし、現時点では4カテゴリのみ可能)。順位の情報はlist形式で作成する。4カテゴリ未満の場合、使っていないクラスの個体名は<code>NULL</code>とする。</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="elo-ratingの算出.html#cb45-1" tabindex="-1"></a>myrank_cat <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">alpha =</span> <span class="st">&quot;a&quot;</span>, <span class="at">high =</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>), </span>
+<span id="cb45-2"><a href="elo-ratingの算出.html#cb45-2" tabindex="-1"></a>                   <span class="at">mid =</span> <span class="fu">c</span>(<span class="st">&quot;d&quot;</span>, <span class="st">&quot;e&quot;</span>), <span class="at">low =</span> <span class="fu">c</span>(<span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>))</span>
+<span id="cb45-3"><a href="elo-ratingの算出.html#cb45-3" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="elo-ratingの算出.html#cb45-4" tabindex="-1"></a><span class="do">## 4カテゴリ未満の場合</span></span>
+<span id="cb45-5"><a href="elo-ratingの算出.html#cb45-5" tabindex="-1"></a><span class="co"># myrank_cat &lt;- list(high = c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;), mid = NULL,</span></span>
+<span id="cb45-6"><a href="elo-ratingの算出.html#cb45-6" tabindex="-1"></a><span class="co">#                    low = c(&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,&quot;g&quot;), superlow = NULL)</span></span>
+<span id="cb45-7"><a href="elo-ratingの算出.html#cb45-7" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="elo-ratingの算出.html#cb45-8" tabindex="-1"></a>myrank_cat</span></code></pre></div>
+<pre><code>## $alpha
+## [1] &quot;a&quot;
+## 
+## $high
+## [1] &quot;b&quot; &quot;c&quot;
+## 
+## $mid
+## [1] &quot;d&quot; &quot;e&quot;
+## 
+## $low
+## [1] &quot;f&quot; &quot;g&quot;</code></pre>
+<p><br/></p>
+<p>このとき、開始時点のレーティングは<code>breatestartvalues</code>関数で以下のように算出できる。<code>rankclasses =</code>で先ほど作成したlistを指定する。</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="elo-ratingの算出.html#cb47-1" tabindex="-1"></a>mystart_cat <span class="ot">&lt;-</span> <span class="fu">createstartvalues</span>(<span class="at">rankclasses =</span> myrank_cat, </span>
+<span id="cb47-2"><a href="elo-ratingの算出.html#cb47-2" tabindex="-1"></a>                                 <span class="at">shape =</span> <span class="fl">0.3</span>, <span class="at">startvalue =</span> <span class="dv">1000</span>, </span>
+<span id="cb47-3"><a href="elo-ratingの算出.html#cb47-3" tabindex="-1"></a>                                 <span class="at">k =</span> <span class="dv">100</span>)</span>
+<span id="cb47-4"><a href="elo-ratingの算出.html#cb47-4" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="elo-ratingの算出.html#cb47-5" tabindex="-1"></a>mystart_cat<span class="sc">$</span>res</span></code></pre></div>
+<pre><code>##    a    b    c    d    e    f    g 
+## 1202 1100 1100  952  952  846  846</code></pre>
+<p><br/></p>
+<p>これを事前情報として用いたElo-ratingは以下のように算出する。<code>startvalue =</code>で先ほど算出したレーティングのベクトルを指定する。</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="elo-ratingの算出.html#cb49-1" tabindex="-1"></a>res_prior_cat <span class="ot">&lt;-</span> <span class="fu">elo.seq</span>(<span class="at">winner=</span> adv2<span class="sc">$</span>winner, <span class="at">loser=</span> adv2<span class="sc">$</span>loser, </span>
+<span id="cb49-2"><a href="elo-ratingの算出.html#cb49-2" tabindex="-1"></a>                         <span class="at">Date =</span> adv2<span class="sc">$</span>Date, <span class="at">startvalue =</span> mystart_cat<span class="sc">$</span>res)</span></code></pre></div>
+<p><br/></p>
+<p>Elo-ratingの時系列的変化を<code>eloplot</code>関数で描画すると以下のようになる(図<a href="elo-ratingの算出.html#fig:p4">7</a>)。やはり事前情報がなかった場合(図<a href="elo-ratingの算出.html#fig:p1">3</a>と図<a href="elo-ratingの算出.html#fig:p2">4</a>)に比べてレーティングが安定するのが早く、burn-in期間が短くなっていることが分かる。</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="elo-ratingの算出.html#cb50-1" tabindex="-1"></a><span class="fu">eloplot</span>(res_prior_cat, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="st">&quot;2010-02-02&quot;</span>, <span class="at">ids =</span> <span class="st">&quot;all&quot;</span>)  </span></code></pre></div>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:p4"></span>
+<img src="Dominance-Analysis-Using-R_files/figure-html/p4-1.png" alt="事前情報(順位カテゴリ)を考慮した場合のElo-rating" width="672" />
+<p class="caption">
+Figure 7: 事前情報(順位カテゴリ)を考慮した場合のElo-rating
+</p>
+</div>
+<p><br/></p>
+</div>
+</div>
+<div id="elo-ratingの抽出" class="section level3 hasAnchor">
+<h3>4.2.2 Elo-ratingの抽出<a href="elo-ratingの算出.html#elo-ratingの抽出" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ある日付におけるElo-ratingは<code>extract_elo</code>関数で以下のように求められる。<code>extractdate =</code>で日付を、<code>IDs =</code>で値を求めたい個体名を指定する(指定しなければ全個体について出力する)。</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="elo-ratingの算出.html#cb51-1" tabindex="-1"></a><span class="fu">extract_elo</span>(res_int_opt, <span class="at">extractdate =</span> <span class="st">&quot;2010-01-28&quot;</span>, <span class="at">IDs =</span> <span class="fu">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;d&quot;</span>,<span class="st">&quot;g&quot;</span>)) </span></code></pre></div>
+<pre><code>##    d    b    g 
+## 1265 1187  747</code></pre>
 <p><br/></p>
 <p>日付を指定しなければ最終日のElo-ratingが求められる。</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="elo-ratingの算出.html#cb31-1" tabindex="-1"></a><span class="fu">extract_elo</span>(res)</span></code></pre></div>
-<pre><code>##    b    c    d    f    e    g    a 
-## 1203 1148 1116 1004  982  843  704</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="elo-ratingの算出.html#cb53-1" tabindex="-1"></a><span class="fu">extract_elo</span>(res_int_opt)</span></code></pre></div>
+<pre><code>##    b    f    d    c    e    g    a 
+## 1305 1272 1267 1167 1058  624  307</code></pre>
 <p><br/></p>
-<p>Elo-ratingの時系列的変化は<code>eloplot</code>関数で以下のように描画できる。<code>from =</code>と<code>to =</code>で日付の範囲を、<code>ids =</code>で描画したい個体名を指定する。</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="elo-ratingの算出.html#cb33-1" tabindex="-1"></a><span class="fu">eloplot</span>(res, <span class="at">from =</span> <span class="st">&quot;2010-01-01&quot;</span>, <span class="at">to =</span> <span class="st">&quot;2010-01-30&quot;</span>, <span class="at">ids =</span> <span class="st">&quot;all&quot;</span>)  </span></code></pre></div>
-<p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+<p>複数の日のデータを一度に取得したい場合は、<code>extradate =</code>で日付を表すベクトルを、<code>IDs =</code>で個体名を表すベクトルを指定する。例えば、元データ<code>adv</code>に勝者(<code>winner</code>)と
+敗者(<code>loser</code>)のElo-ratingを示す列を作成する場合は以下のようにする。</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="elo-ratingの算出.html#cb55-1" tabindex="-1"></a>adv <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="elo-ratingの算出.html#cb55-2" tabindex="-1"></a>  <span class="do">## 勝者のElo-rating</span></span>
+<span id="cb55-3"><a href="elo-ratingの算出.html#cb55-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rate_winner =</span> <span class="fu">extract_elo</span>(res_int_opt,</span>
+<span id="cb55-4"><a href="elo-ratingの算出.html#cb55-4" tabindex="-1"></a>                                   <span class="at">extractdate =</span> adv2<span class="sc">$</span>Date,</span>
+<span id="cb55-5"><a href="elo-ratingの算出.html#cb55-5" tabindex="-1"></a>                                   <span class="at">IDs =</span> adv2<span class="sc">$</span>winner)) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-6"><a href="elo-ratingの算出.html#cb55-6" tabindex="-1"></a>  <span class="do">## 敗者のElo-rating</span></span>
+<span id="cb55-7"><a href="elo-ratingの算出.html#cb55-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rate_loser =</span> <span class="fu">extract_elo</span>(res_int_opt,</span>
+<span id="cb55-8"><a href="elo-ratingの算出.html#cb55-8" tabindex="-1"></a>                                  <span class="at">extractdate =</span> adv2<span class="sc">$</span>Date,</span>
+<span id="cb55-9"><a href="elo-ratingの算出.html#cb55-9" tabindex="-1"></a>                                  <span class="at">IDs =</span> adv2<span class="sc">$</span>loser)) </span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Date"],"name":[1],"type":["date"],"align":["right"]},{"label":["Time"],"name":[2],"type":["chr"],"align":["left"]},{"label":["winner"],"name":[3],"type":["fct"],"align":["left"]},{"label":["loser"],"name":[4],"type":["fct"],"align":["left"]},{"label":["Rate_winner"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Rate_loser"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"2010-01-01","2":"15:38:13","3":"b","4":"c","5":"907","6":"1000"},{"1":"2010-01-02","2":"16:07:30","3":"c","4":"g","5":"883","6":"1000"},{"1":"2010-01-03","2":"10:26:45","3":"c","4":"d","5":"883","6":"913"},{"1":"2010-01-04","2":"15:44:58","3":"c","4":"d","5":"883","6":"868"},{"1":"2010-01-05","2":"14:26:55","3":"b","4":"e","5":"1156","6":"931"},{"1":"2010-01-06","2":"17:31:02","3":"d","4":"f","5":"1193","6":"675"},{"1":"2010-01-07","2":"14:26:55","3":"d","4":"e","5":"1226","6":"898"},{"1":"2010-01-08","2":"15:05:16","3":"g","4":"f","5":"1000","6":"632"},{"1":"2010-01-09","2":"10:26:55","3":"e","4":"a","5":"1017","6":"1162"},{"1":"2010-01-10","2":"16:18:31","3":"c","4":"g","5":"887","6":"881"},{"1":"2010-01-11","2":"8:36:47","3":"c","4":"b","5":"887","6":"1279"},{"1":"2010-01-12","2":"16:47:57","3":"g","4":"f","5":"881","6":"598"},{"1":"2010-01-13","2":"16:11:15","3":"a","4":"f","5":"1078","6":"569"},{"1":"2010-01-14","2":"12:22:17","3":"b","4":"f","5":"1279","6":"562"},{"1":"2010-01-15","2":"11:49:24","3":"f","4":"g","5":"991","6":"910"},{"1":"2010-01-16","2":"16:44:17","3":"d","4":"a","5":"1251","6":"1085"},{"1":"2010-01-17","2":"15:29:03","3":"f","4":"e","5":"1247","6":"761"},{"1":"2010-01-18","2":"12:22:10","3":"c","4":"e","5":"492","6":"755"},{"1":"2010-01-19","2":"8:33:25","3":"b","4":"a","5":"1285","6":"1130"},{"1":"2010-01-20","2":"12:24:19","3":"d","4":"a","5":"1265","6":"1130"},{"1":"2010-01-21","2":"13:39:18","3":"f","4":"e","5":"1267","6":"735"},{"1":"2010-01-22","2":"12:30:59","3":"e","4":"a","5":"852","6":"1130"},{"1":"2010-01-23","2":"9:13:22","3":"f","4":"a","5":"1272","6":"1130"},{"1":"2010-01-24","2":"11:35:35","3":"c","4":"g","5":"492","6":"704"},{"1":"2010-01-25","2":"15:23:17","3":"b","4":"a","5":"1285","6":"1162"},{"1":"2010-01-26","2":"14:32:31","3":"b","4":"e","5":"1285","6":"827"},{"1":"2010-01-27","2":"14:07:21","3":"g","4":"a","5":"319","6":"1187"},{"1":"2010-01-28","2":"13:35:59","3":"e","4":"g","5":"925","6":"319"},{"1":"2010-01-29","2":"13:58:16","3":"g","4":"a","5":"307","6":"1187"},{"1":"2010-01-30","2":"7:52:27","3":"b","4":"a","5":"1285","6":"1187"},{"1":"2010-01-31","2":"13:15:58","3":"e","4":"g","5":"1058","6":"307"},{"1":"2010-02-01","2":"8:35:23","3":"b","4":"c","5":"1167","6":"626"},{"1":"2010-02-02","2":"6:11:36","3":"d","4":"g","5":"1267","6":"307"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br/></p>
+<p>新しく日付と個体名を含むデータフレームを作成し、そこに各個体のElo-ratingを表す列を作成するというようなこともできる。</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="elo-ratingの算出.html#cb56-1" tabindex="-1"></a><span class="do">## 全ての日付と個体名の組み合わせを含むデータフレームを作成</span></span>
+<span id="cb56-2"><a href="elo-ratingの算出.html#cb56-2" tabindex="-1"></a>all_combi <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">Date =</span> <span class="fu">unique</span>(adv2<span class="sc">$</span>Date),</span>
+<span id="cb56-3"><a href="elo-ratingの算出.html#cb56-3" tabindex="-1"></a>                      <span class="at">ID =</span> <span class="fu">unique</span>(<span class="fu">c</span>(adv2<span class="sc">$</span>winner, adv2<span class="sc">$</span>loser)))</span>
+<span id="cb56-4"><a href="elo-ratingの算出.html#cb56-4" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="elo-ratingの算出.html#cb56-5" tabindex="-1"></a><span class="do">## 各日・各個体のElo-ratingを算出</span></span>
+<span id="cb56-6"><a href="elo-ratingの算出.html#cb56-6" tabindex="-1"></a>all_combi <span class="sc">%&gt;%</span> </span>
+<span id="cb56-7"><a href="elo-ratingの算出.html#cb56-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Elo_rating =</span> <span class="fu">extract_elo</span>(res_int_opt,</span>
+<span id="cb56-8"><a href="elo-ratingの算出.html#cb56-8" tabindex="-1"></a>                                  <span class="at">extractdate =</span> all_combi<span class="sc">$</span>Date,</span>
+<span id="cb56-9"><a href="elo-ratingの算出.html#cb56-9" tabindex="-1"></a>                                  <span class="at">IDs =</span> all_combi<span class="sc">$</span>ID)) </span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Date"],"name":[1],"type":["date"],"align":["right"]},{"label":["ID"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Elo_rating"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2010-01-01","2":"a","3":"1093"},{"1":"2010-01-01","2":"b","3":"907"},{"1":"2010-01-01","2":"c","3":"1000"},{"1":"2010-01-01","2":"d","3":"1000"},{"1":"2010-01-01","2":"e","3":"1000"},{"1":"2010-01-01","2":"f","3":"1000"},{"1":"2010-01-01","2":"g","3":"1000"},{"1":"2010-01-02","2":"a","3":"1093"},{"1":"2010-01-02","2":"b","3":"1024"},{"1":"2010-01-02","2":"c","3":"883"},{"1":"2010-01-02","2":"d","3":"1000"},{"1":"2010-01-02","2":"e","3":"1000"},{"1":"2010-01-02","2":"f","3":"1000"},{"1":"2010-01-02","2":"g","3":"1000"},{"1":"2010-01-03","2":"a","3":"1093"},{"1":"2010-01-03","2":"b","3":"1111"},{"1":"2010-01-03","2":"c","3":"883"},{"1":"2010-01-03","2":"d","3":"913"},{"1":"2010-01-03","2":"e","3":"1000"},{"1":"2010-01-03","2":"f","3":"1000"},{"1":"2010-01-03","2":"g","3":"1000"},{"1":"2010-01-04","2":"a","3":"1093"},{"1":"2010-01-04","2":"b","3":"1156"},{"1":"2010-01-04","2":"c","3":"883"},{"1":"2010-01-04","2":"d","3":"868"},{"1":"2010-01-04","2":"e","3":"1000"},{"1":"2010-01-04","2":"f","3":"1000"},{"1":"2010-01-04","2":"g","3":"1000"},{"1":"2010-01-05","2":"a","3":"1162"},{"1":"2010-01-05","2":"b","3":"1156"},{"1":"2010-01-05","2":"c","3":"883"},{"1":"2010-01-05","2":"d","3":"868"},{"1":"2010-01-05","2":"e","3":"931"},{"1":"2010-01-05","2":"f","3":"1000"},{"1":"2010-01-05","2":"g","3":"1000"},{"1":"2010-01-06","2":"a","3":"1162"},{"1":"2010-01-06","2":"b","3":"1156"},{"1":"2010-01-06","2":"c","3":"883"},{"1":"2010-01-06","2":"d","3":"1193"},{"1":"2010-01-06","2":"e","3":"931"},{"1":"2010-01-06","2":"f","3":"675"},{"1":"2010-01-06","2":"g","3":"1000"},{"1":"2010-01-07","2":"a","3":"1162"},{"1":"2010-01-07","2":"b","3":"1156"},{"1":"2010-01-07","2":"c","3":"883"},{"1":"2010-01-07","2":"d","3":"1226"},{"1":"2010-01-07","2":"e","3":"898"},{"1":"2010-01-07","2":"f","3":"675"},{"1":"2010-01-07","2":"g","3":"1000"},{"1":"2010-01-08","2":"a","3":"1162"},{"1":"2010-01-08","2":"b","3":"1156"},{"1":"2010-01-08","2":"c","3":"926"},{"1":"2010-01-08","2":"d","3":"1226"},{"1":"2010-01-08","2":"e","3":"898"},{"1":"2010-01-08","2":"f","3":"632"},{"1":"2010-01-08","2":"g","3":"1000"},{"1":"2010-01-09","2":"a","3":"1162"},{"1":"2010-01-09","2":"b","3":"1156"},{"1":"2010-01-09","2":"c","3":"926"},{"1":"2010-01-09","2":"d","3":"1226"},{"1":"2010-01-09","2":"e","3":"1017"},{"1":"2010-01-09","2":"f","3":"632"},{"1":"2010-01-09","2":"g","3":"881"},{"1":"2010-01-10","2":"a","3":"1162"},{"1":"2010-01-10","2":"b","3":"1195"},{"1":"2010-01-10","2":"c","3":"887"},{"1":"2010-01-10","2":"d","3":"1226"},{"1":"2010-01-10","2":"e","3":"1017"},{"1":"2010-01-10","2":"f","3":"632"},{"1":"2010-01-10","2":"g","3":"881"},{"1":"2010-01-11","2":"a","3":"1078"},{"1":"2010-01-11","2":"b","3":"1279"},{"1":"2010-01-11","2":"c","3":"887"},{"1":"2010-01-11","2":"d","3":"1226"},{"1":"2010-01-11","2":"e","3":"1017"},{"1":"2010-01-11","2":"f","3":"632"},{"1":"2010-01-11","2":"g","3":"881"},{"1":"2010-01-12","2":"a","3":"1078"},{"1":"2010-01-12","2":"b","3":"1279"},{"1":"2010-01-12","2":"c","3":"921"},{"1":"2010-01-12","2":"d","3":"1226"},{"1":"2010-01-12","2":"e","3":"1017"},{"1":"2010-01-12","2":"f","3":"598"},{"1":"2010-01-12","2":"g","3":"881"},{"1":"2010-01-13","2":"a","3":"1078"},{"1":"2010-01-13","2":"b","3":"1279"},{"1":"2010-01-13","2":"c","3":"921"},{"1":"2010-01-13","2":"d","3":"1226"},{"1":"2010-01-13","2":"e","3":"1017"},{"1":"2010-01-13","2":"f","3":"569"},{"1":"2010-01-13","2":"g","3":"910"},{"1":"2010-01-14","2":"a","3":"1085"},{"1":"2010-01-14","2":"b","3":"1279"},{"1":"2010-01-14","2":"c","3":"921"},{"1":"2010-01-14","2":"d","3":"1226"},{"1":"2010-01-14","2":"e","3":"1017"},{"1":"2010-01-14","2":"f","3":"562"},{"1":"2010-01-14","2":"g","3":"910"},{"1":"2010-01-15","2":"a","3":"1085"},{"1":"2010-01-15","2":"b","3":"1279"},{"1":"2010-01-15","2":"c","3":"492"},{"1":"2010-01-15","2":"d","3":"1226"},{"1":"2010-01-15","2":"e","3":"1017"},{"1":"2010-01-15","2":"f","3":"991"},{"1":"2010-01-15","2":"g","3":"910"},{"1":"2010-01-16","2":"a","3":"1085"},{"1":"2010-01-16","2":"b","3":"1279"},{"1":"2010-01-16","2":"c","3":"492"},{"1":"2010-01-16","2":"d","3":"1251"},{"1":"2010-01-16","2":"e","3":"1017"},{"1":"2010-01-16","2":"f","3":"991"},{"1":"2010-01-16","2":"g","3":"885"},{"1":"2010-01-17","2":"a","3":"1085"},{"1":"2010-01-17","2":"b","3":"1279"},{"1":"2010-01-17","2":"c","3":"492"},{"1":"2010-01-17","2":"d","3":"1251"},{"1":"2010-01-17","2":"e","3":"761"},{"1":"2010-01-17","2":"f","3":"1247"},{"1":"2010-01-17","2":"g","3":"885"},{"1":"2010-01-18","2":"a","3":"1085"},{"1":"2010-01-18","2":"b","3":"1285"},{"1":"2010-01-18","2":"c","3":"492"},{"1":"2010-01-18","2":"d","3":"1251"},{"1":"2010-01-18","2":"e","3":"755"},{"1":"2010-01-18","2":"f","3":"1247"},{"1":"2010-01-18","2":"g","3":"885"},{"1":"2010-01-19","2":"a","3":"1130"},{"1":"2010-01-19","2":"b","3":"1285"},{"1":"2010-01-19","2":"c","3":"492"},{"1":"2010-01-19","2":"d","3":"1251"},{"1":"2010-01-19","2":"e","3":"755"},{"1":"2010-01-19","2":"f","3":"1247"},{"1":"2010-01-19","2":"g","3":"840"},{"1":"2010-01-20","2":"a","3":"1130"},{"1":"2010-01-20","2":"b","3":"1285"},{"1":"2010-01-20","2":"c","3":"492"},{"1":"2010-01-20","2":"d","3":"1265"},{"1":"2010-01-20","2":"e","3":"755"},{"1":"2010-01-20","2":"f","3":"1247"},{"1":"2010-01-20","2":"g","3":"826"},{"1":"2010-01-21","2":"a","3":"1130"},{"1":"2010-01-21","2":"b","3":"1285"},{"1":"2010-01-21","2":"c","3":"492"},{"1":"2010-01-21","2":"d","3":"1265"},{"1":"2010-01-21","2":"e","3":"735"},{"1":"2010-01-21","2":"f","3":"1267"},{"1":"2010-01-21","2":"g","3":"826"},{"1":"2010-01-22","2":"a","3":"1130"},{"1":"2010-01-22","2":"b","3":"1285"},{"1":"2010-01-22","2":"c","3":"492"},{"1":"2010-01-22","2":"d","3":"1265"},{"1":"2010-01-22","2":"e","3":"852"},{"1":"2010-01-22","2":"f","3":"1267"},{"1":"2010-01-22","2":"g","3":"709"},{"1":"2010-01-23","2":"a","3":"1130"},{"1":"2010-01-23","2":"b","3":"1285"},{"1":"2010-01-23","2":"c","3":"492"},{"1":"2010-01-23","2":"d","3":"1265"},{"1":"2010-01-23","2":"e","3":"852"},{"1":"2010-01-23","2":"f","3":"1272"},{"1":"2010-01-23","2":"g","3":"704"},{"1":"2010-01-24","2":"a","3":"1130"},{"1":"2010-01-24","2":"b","3":"1285"},{"1":"2010-01-24","2":"c","3":"492"},{"1":"2010-01-24","2":"d","3":"1265"},{"1":"2010-01-24","2":"e","3":"852"},{"1":"2010-01-24","2":"f","3":"1272"},{"1":"2010-01-24","2":"g","3":"704"},{"1":"2010-01-25","2":"a","3":"1162"},{"1":"2010-01-25","2":"b","3":"1285"},{"1":"2010-01-25","2":"c","3":"492"},{"1":"2010-01-25","2":"d","3":"1265"},{"1":"2010-01-25","2":"e","3":"852"},{"1":"2010-01-25","2":"f","3":"1272"},{"1":"2010-01-25","2":"g","3":"672"},{"1":"2010-01-26","2":"a","3":"1187"},{"1":"2010-01-26","2":"b","3":"1285"},{"1":"2010-01-26","2":"c","3":"492"},{"1":"2010-01-26","2":"d","3":"1265"},{"1":"2010-01-26","2":"e","3":"827"},{"1":"2010-01-26","2":"f","3":"1272"},{"1":"2010-01-26","2":"g","3":"672"},{"1":"2010-01-27","2":"a","3":"1187"},{"1":"2010-01-27","2":"b","3":"1285"},{"1":"2010-01-27","2":"c","3":"845"},{"1":"2010-01-27","2":"d","3":"1265"},{"1":"2010-01-27","2":"e","3":"827"},{"1":"2010-01-27","2":"f","3":"1272"},{"1":"2010-01-27","2":"g","3":"319"},{"1":"2010-01-28","2":"a","3":"1187"},{"1":"2010-01-28","2":"b","3":"1285"},{"1":"2010-01-28","2":"c","3":"747"},{"1":"2010-01-28","2":"d","3":"1265"},{"1":"2010-01-28","2":"e","3":"925"},{"1":"2010-01-28","2":"f","3":"1272"},{"1":"2010-01-28","2":"g","3":"319"},{"1":"2010-01-29","2":"a","3":"1187"},{"1":"2010-01-29","2":"b","3":"1285"},{"1":"2010-01-29","2":"c","3":"759"},{"1":"2010-01-29","2":"d","3":"1265"},{"1":"2010-01-29","2":"e","3":"925"},{"1":"2010-01-29","2":"f","3":"1272"},{"1":"2010-01-29","2":"g","3":"307"},{"1":"2010-01-30","2":"a","3":"1187"},{"1":"2010-01-30","2":"b","3":"1285"},{"1":"2010-01-30","2":"c","3":"759"},{"1":"2010-01-30","2":"d","3":"1265"},{"1":"2010-01-30","2":"e","3":"925"},{"1":"2010-01-30","2":"f","3":"1272"},{"1":"2010-01-30","2":"g","3":"307"},{"1":"2010-01-31","2":"a","3":"1187"},{"1":"2010-01-31","2":"b","3":"1285"},{"1":"2010-01-31","2":"c","3":"626"},{"1":"2010-01-31","2":"d","3":"1265"},{"1":"2010-01-31","2":"e","3":"1058"},{"1":"2010-01-31","2":"f","3":"1272"},{"1":"2010-01-31","2":"g","3":"307"},{"1":"2010-02-01","2":"a","3":"1305"},{"1":"2010-02-01","2":"b","3":"1167"},{"1":"2010-02-01","2":"c","3":"626"},{"1":"2010-02-01","2":"d","3":"1265"},{"1":"2010-02-01","2":"e","3":"1058"},{"1":"2010-02-01","2":"f","3":"1272"},{"1":"2010-02-01","2":"g","3":"307"},{"1":"2010-02-02","2":"a","3":"1305"},{"1":"2010-02-02","2":"b","3":"1167"},{"1":"2010-02-02","2":"c","3":"624"},{"1":"2010-02-02","2":"d","3":"1267"},{"1":"2010-02-02","2":"e","3":"1058"},{"1":"2010-02-02","2":"f","3":"1272"},{"1":"2010-02-02","2":"g","3":"307"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><br/></p>
 
+</div>
 </div>
 </div>
 <h3>References</h3>
@@ -283,9 +496,37 @@ p_{AB} = \frac{1}{10^{(R_B - R_A)/400} + 1}
 <div id="ref-Albers2001" class="csl-entry">
 Albers, Vries (2001) Elo-rating as a tool in the sequential estimation of dominance strengths. Anim Behav
 </div>
+<div id="ref-ballesta2021" class="csl-entry">
+Ballesta S, Sadoughi B, Miss F, et al (2021) Assessing the reliability of an automated method for measuring dominance hierarchy in non-human primates. Primates 62:595–607
+</div>
+<div id="ref-Foerster2016" class="csl-entry">
+Foerster S, Franz M, Murray CM, et al (2016) Chimpanzee females queue but males compete for social status. Sci Rep 6:35404
+</div>
+<div id="ref-Franz2015" class="csl-entry">
+Franz M, McLean E, Tung J, et al (2015) Self-organizing dominance hierarchies in a wild primate population. Proc Biol Sci 282:
+</div>
+<div id="ref-Goffe2018" class="csl-entry">
+Goffe AS, Fischer J, Sennhenn-Reulen H (2018) Bayesian inference and simulation approaches improve the assessment of elo‐ratings in the analysis of social behaviour. Methods Ecol Evol 9:2131–2144
+</div>
+<div id="ref-jarvey2024" class="csl-entry">
+Jarvey JC, Low BS, Azanaw Haile A, et al (2024) Aggression rates increase around seasonally exploited resources in a primarily grass-eating primate. Behavioral Ecology 35:arad079
+</div>
 <div id="ref-Neumann2011" class="csl-entry">
 Neumann C, Duboscq J, Dubuc C, et al (2011) Assessing dominance hierarchies: Validation and advantages of progressive evaluation with elo-rating. Anim Behav 82:911–921
 </div>
+<div id="ref-neumann2023" class="csl-entry">
+Neumann C, Fischer J (2023) Extending bayesian elo-rating to quantify the steepness of dominance hierarchies. Methods in Ecology and Evolution 14:669–682
+</div>
+<div id="ref-Newton-Fisher2017" class="csl-entry">
+Newton-Fisher NE (2017) Modeling social dominance: <span>Elo-Ratings</span>, prior history, and the intensity of aggression. 38:427–447
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><span class="math inline">\(k\)</span>の推定方法には、<code>optim</code>関数を用いた最尤推定を行う方法<span class="citation">(<a href="#ref-Foerster2016">Foerster et al. 2016</a>)</span>、ベイズ推定を行う方法や<span class="citation">(<a href="#ref-Goffe2018">Goffe et al. 2018</a>; <a href="#ref-neumann2023">Neumann and Fischer 2023</a>)</span>、<span class="math inline">\(k\)</span>を応答変数、多数の変数を説明変数とした一般化線形モデルによって最尤推定されたパラメータによる予測値を用いる方法<span class="citation">(<a href="#ref-Franz2015">Franz et al. 2015</a>)</span>など、他にも様々なものがあるようだ。ただし、いずれも<code>EloRating</code>パッケージには実装されていない。<a href="elo-ratingの算出.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>数字の順位(1位, 2位, …, 10位)が分かっている場合はそれをそのまま使用する。順位がカテゴリカルな場合も使えるが、現在は4カテゴリの場合のみ使用できる。このとき、順位が高いカテゴリから順に<span class="math inline">\(1, N/4, N/2, N - N/4\)</span>が割り当てられて使用される(<span class="math inline">\(N\)</span>は個体数)。<a href="elo-ratingの算出.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
