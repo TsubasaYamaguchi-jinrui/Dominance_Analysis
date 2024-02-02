@@ -352,8 +352,8 @@ Figure 4: 交渉の種類を考慮した場合のElo-rating
 </p>
 </div>
 </div>
-<div id="事前の情報の考慮する場合" class="section level4 hasAnchor">
-<h4>4.2.1.3 事前の情報の考慮する場合<a href="elo-ratingの算出.html#事前の情報の考慮する場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="事前情報を考慮する場合" class="section level4 hasAnchor">
+<h4>4.2.1.3 事前情報を考慮する場合<a href="elo-ratingの算出.html#事前情報を考慮する場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Elo-ratingは、データ収集の開始時点では全ての個体のレーティングが等しいと仮定され、それを実際の交渉の結果によって更新していく。しかし、これは集団が新たに形成された場合は適切であるが、集団がデータ収集前から存在している場合には妥当ではない<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。また、Elo-ratingが実際の優劣関係と一致するためには、交渉数が十分に蓄積する時点までburn-in期間と呼ばれる期間が必要である<span class="citation">(<a href="#ref-Albers2001">Albers and Vries 2001</a>; <a href="#ref-Neumann2011">Neumann et al. 2011</a>)</span>。この期間のElo-ratingは信頼性が低く、分析などに使用することができない<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。</p>
 <p>これらの問題を解決するため、 <span class="citation">Newton-Fisher (<a href="#ref-Newton-Fisher2017">2017</a>)</span> は<strong>事前に個体間の優劣関係についてわかっている情報をElo-ratingの算出に用いる</strong>ことを提案している。この方法を用いれば、データ収集の開始時点から個体間のレーティングが全く同じになることはなく、またburn-in期間を短縮できる可能性がある。</p>
 <p>事前に個体間の優劣関係(e.g., 順位など)が分かっているとき、開始時点の個体<span class="math inline">\(i\)</span>のElo-ratingは以下のように定義される<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>)</span>。<span class="math inline">\(S_e\)</span>は事前の情報がない場合の開始時点のレーティング(デフォルトは1000)、<span class="math inline">\(x_r\)</span>は事前情報で分かっている全個体の順位の中央値、<span class="math inline">\(S_{ri}\)</span>は事前情報による個体<span class="math inline">\(i\)</span>の順位である<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。<span class="math inline">\(k\)</span>は前節までと同じで、<span class="math inline">\(l_r\)</span>は事前情報による順位をどの程度反映させるかを決める定数で、0から1の値を指定できる。</p>

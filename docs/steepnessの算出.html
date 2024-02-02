@@ -244,13 +244,13 @@ steepnessは<strong>順位序列の厳しさ</strong>を表し、例えば専制
 <p>個体の勝敗がランダムに決まるときに比べて、steepnessが有意に高いかを検定することもできる<span class="citation">(<a href="#ref-deVries2006">De Vries et al. 2006</a>)</span>。検定をする場合、ランダム化を行う回数を<code>nrand =</code>で指定する。今回の場合、<span class="math inline">\(p &lt; 0.001\)</span>となり、有意であることが分かった。</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="steepnessの算出.html#cb11-1" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">Dij =</span> <span class="cn">TRUE</span>, <span class="at">nrand =</span> <span class="dv">10000</span>)</span></code></pre></div>
 <pre><code>##        steep     expected            p        nrand 
-## 7.420538e-01 3.012287e-01 1.000000e-04 1.000000e+04</code></pre>
+## 7.420538e-01 3.004903e-01 1.000000e-04 1.000000e+04</code></pre>
 <p><br/></p>
 <p><code>returnfig = TRUE</code>とすると、ランダムに勝敗が決まる場合のsteepnessの分布(<code>extected</code>)と実際のsteepnessの値(<code>expected</code>)をプロットできる。</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="steepnessの算出.html#cb13-1" tabindex="-1"></a>EloRating<span class="sc">::</span><span class="fu">steepness</span>(mat, <span class="at">Dij =</span> <span class="cn">TRUE</span>, <span class="at">nrand =</span> <span class="dv">10000</span>, <span class="at">returnfig =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="Dominance-Analysis-Using-R_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 <pre><code>##        steep     expected            p        nrand 
-## 7.420538e-01 3.020680e-01 1.000000e-04 1.000000e+04</code></pre>
+## 7.420538e-01 3.013294e-01 1.000000e-04 1.000000e+04</code></pre>
 
 </div>
 </div>
