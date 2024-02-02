@@ -144,18 +144,18 @@ $$
 
 ```{r shape, echo = FALSE, fig.cap = "lrによる開始時点のレーティング。", fig.height = 4}
 library(ggsci)
-shape <- seq(0,1,0.2)
+lr <- seq(0,1,0.2)
 
 myranks <- c(1,2,3,4,5,6,7,8,9,10)
 names(myranks) <- c("a", "c", "d", "f", "g", "k", "n", "s", "w", "z")
 
 map_df(shape, ~createstartvalues(ranks= myranks, shape= ., k = 100)$res) %>% 
-  mutate(shape = shape) %>% 
+  mutate(lr = lr) %>% 
   pivot_longer(cols = 1:10) %>% 
   mutate(rank = rep(1:10, times = 6)) %>% 
-  mutate(shape = as.factor(shape)) %>% 
+  mutate(lr = as.factor(lr)) %>% 
   ggplot(aes(x = rank, y = value))+
-  geom_line(aes(color = shape)) +
+  geom_line(aes(color = lr)) +
   theme_bw(base_size = 12)+
   labs(x = "事前情報による順位(prior ordinal rank)",
        y = "開始時点のレーティング")+
