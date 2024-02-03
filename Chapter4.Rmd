@@ -103,7 +103,7 @@ ml_z2 <- optimizek(res_int,
                    resolution = 1000,
                    itype = adv2$intensity)
 
-ml_z2$best
+ml_z2$best　
 ```
 <br/>  
 
