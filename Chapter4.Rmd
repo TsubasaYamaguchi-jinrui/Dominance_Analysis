@@ -160,7 +160,7 @@ map_df(shape, ~createstartvalues(ranks= myranks, shape= ., k = 100)$res) %>%
   scale_x_continuous(breaks = seq(0,10,1))+
   labs(x = "事前情報による順位(prior ordinal rank)",
        y = "開始時点のレーティング")+
-  see::scale_color_metro()
+  see::scale_color_metro()　
 ```
 <br/>  
 
