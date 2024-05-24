@@ -23,7 +23,7 @@
 <meta name="author" content="Tsubasa Yamaguchi" />
 
 
-<meta name="date" content="2024-02-03" />
+<meta name="date" content="2024-05-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -220,7 +220,7 @@ div.csl-indent {
 <h1>4. Elo-ratingの算出<a href="elo-ratingの算出.html#elo-ratingの算出" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="elo-ratingとは" class="section level2 hasAnchor">
 <h2>4.1 Elo-ratingとは<a href="elo-ratingの算出.html#elo-ratingとは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Elo-rating</strong>とは、各個体の相対的な強さを表す指標であり、そのときどきの勝敗によって常に変動する。主にサッカーやチェス、将棋などの競技で用いられているが、近年霊長類学を含む動物行動学の分野でもよく使われるようになっている<span class="citation">(<a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>; <a href="#ref-ballesta2021">Ballesta et al. 2021</a>; <a href="#ref-neumann2023">Neumann and Fischer 2023</a>; <a href="#ref-jarvey2024">Jarvey et al. 2024</a>)</span>。時系列的に指標の変化を調べることができ、<strong>交渉結果によって指標が随時更新されていく</strong>という点で他の順位関連指標(e.g., David’s score)とは異なる<span class="citation">(cf. <a href="#ref-Albers2001">Albers and Vries 2001</a>)</span>。</p>
+<p><strong>Elo-rating</strong>とは、各個体の相対的な強さを表す指標であり、そのときどきの勝敗によって常に変動する。主にサッカーやチェス、将棋などの競技で用いられているが、近年霊長類学を含む動物行動学の分野でもよく使われるようになっている<span class="citation">(<a href="#ref-Foerster2016">Foerster et al. 2016</a>; <a href="#ref-Newton-Fisher2017">Newton-Fisher 2017</a>; <a href="#ref-Mielke2019">Mielke et al. 2019</a>; <a href="#ref-ballesta2021">Ballesta et al. 2021</a>; <a href="#ref-neumann2023">Neumann and Fischer 2023</a>; <a href="#ref-jarvey2024">Jarvey et al. 2024</a>)</span>。時系列的に指標の変化を調べることができ、<strong>交渉結果によって指標が随時更新されていく</strong>という点で他の順位関連指標(e.g., David’s score)とは異なる<span class="citation">(cf. <a href="#ref-Albers2001">Albers and Vries 2001</a>)</span>。</p>
 <p><strong>Elo-rating</strong>では、交渉のたびに交渉前のレーティングから予想される勝利確率と実際の交渉結果を比較し、これらがどの程度違うかによってレーティングを更新していく。具体的には、個体<span class="math inline">\(A\)</span>と<span class="math inline">\(B\)</span>のレーティングを<span class="math inline">\(R_A, R_B\)</span>、個体<span class="math inline">\(A\)</span>が<span class="math inline">\(B\)</span>に勝つ確率を<span class="math inline">\(p_{AB}\)</span>とするとき、交渉後のレーティング(<span class="math inline">\(R_{Anew}, R_{Bnew}\)</span>)は以下のように変化する<span class="citation">(<a href="#ref-Neumann2011">Neumann et al. 2011</a>)</span>。なお、<span class="math inline">\(k\)</span>は定数で自由に設定できる。<span class="math inline">\(k\)</span>が大きいほど1回の交渉がレーティングに与える影響が大きくなる。</p>
 <p><strong>Aが勝った場合</strong><br />
 <span class="math display">\[
@@ -237,7 +237,7 @@ R_{Bnew} = R_B + p_{AB}\times k
 <span class="math display">\[
 p_{AB} = \frac{1}{10^{(R_B - R_A)/400} + 1}
 \]</span></p>
-<p>ただし、勝利確率をどのように算出するかについては、まだコンセンサスが得られておらず、様々な方法があるようだ<span class="citation">(<a href="#ref-neumann2023">Neumann and Fischer 2023</a>)</span>。霊長類の研究<span class="citation">(<a href="#ref-Franz2015">Franz et al. 2015</a>; <a href="#ref-Goffe2018">Goffe et al. 2018</a>)</span>では、交渉前に個体<span class="math inline">\(A\)</span>が<span class="math inline">\(B\)</span>に勝つ確率<span class="math inline">\(P_{AB}\)</span>を以下のように定義している。なお、 <span class="citation">Franz et al. (<a href="#ref-Franz2015">2015</a>)</span> では<span class="math inline">\(\delta = 0.01\)</span>、 <span class="citation">Goffe et al. (<a href="#ref-Goffe2018">2018</a>)</span> では<span class="math inline">\(\delta = 1\)</span>としている。</p>
+<p>ただし、勝利確率をどのように算出するかについては、まだコンセンサスが得られておらず、様々な方法があるようだ<span class="citation">(<a href="#ref-neumann2023">Neumann and Fischer 2023</a>)</span>。霊長類の研究<span class="citation">(e.g., <a href="#ref-Franz2015">Franz et al. 2015</a>; <a href="#ref-Goffe2018">Goffe et al. 2018</a>)</span>では、交渉前に個体<span class="math inline">\(A\)</span>が<span class="math inline">\(B\)</span>に勝つ確率<span class="math inline">\(P_{AB}\)</span>を以下のように定義している。なお、 <span class="citation">Franz et al. (<a href="#ref-Franz2015">2015</a>)</span> では<span class="math inline">\(\delta = 0.01\)</span>、 <span class="citation">Goffe et al. (<a href="#ref-Goffe2018">2018</a>)</span> では<span class="math inline">\(\delta = 1\)</span>としている。</p>
 <p><span class="math display">\[
 P_{AB} = \frac{1}{1 + exp(- \delta(R_A - R_B))}
 \]</span></p>
@@ -510,6 +510,9 @@ Goffe AS, Fischer J, Sennhenn-Reulen H (2018) Bayesian inference and simulation 
 </div>
 <div id="ref-jarvey2024" class="csl-entry">
 Jarvey JC, Low BS, Azanaw Haile A, et al (2024) Aggression rates increase around seasonally exploited resources in a primarily grass-eating primate. Behavioral Ecology 35:arad079
+</div>
+<div id="ref-Mielke2019" class="csl-entry">
+Mielke A, Crockford C, Wittig R (2019) Rank changes in female chimpanzees in ta<span>ı̈</span> national park. The Tai 290–300
 </div>
 <div id="ref-Neumann2011" class="csl-entry">
 Neumann C, Duboscq J, Dubuc C, et al (2011) Assessing dominance hierarchies: Validation and advantages of progressive evaluation with elo-rating. Anim Behav 82:911–921
